@@ -14,10 +14,10 @@
     <block if="{{hasAgreed}}">
       <!-- 内容区域 -->
       <div class="content-area">
-        <shouye-tab if="{{currentTab === 'shouye'}}"></shouye-tab>
-        <heshui-tab if="{{currentTab === 'heshui'}}"></heshui-tab>
-        <zhoushuju-tab if="{{currentTab === 'zhoushuju'}}"></zhoushuju-tab>
-        <mine-tab if="{{currentTab === 'mine'}}"></mine-tab>
+        <shouye-tab show="{{currentTab === 'shouye'}}" is-active="{{currentTab === 'shouye'}}"></shouye-tab>
+        <heshui-tab show="{{currentTab === 'heshui'}}" is-active="{{currentTab === 'heshui'}}"></heshui-tab>
+        <zhoushuju-tab show="{{currentTab === 'zhoushuju'}}" is-active="{{currentTab === 'zhoushuju'}}"></zhoushuju-tab>
+        <mine-tab show="{{currentTab === 'mine'}}" is-active="{{currentTab === 'mine'}}"></mine-tab>
       </div>
       
       <!-- 底部导航栏 -->

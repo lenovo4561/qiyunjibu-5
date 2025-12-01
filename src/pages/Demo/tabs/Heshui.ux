@@ -88,6 +88,7 @@
 import storage from '@system.storage'
 
 export default {
+  props: ['isActive'],
   data: {
     currentMonth: '',
     currentDay: '',
@@ -108,8 +109,19 @@ export default {
     // 生成今日的存储key
     this.todayKey = `water_data_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     this.loadTodayWater()
+    
+    // 监听 isActive 变化
+    this.$watch('isActive', 'onActiveChange')
+  },
+  onActiveChange(newVal) {
+    if (newVal) {
+      this.checkDateAndReload()
+    }
   },
   onShow() {
+    this.checkDateAndReload()
+  },
+  checkDateAndReload() {
     // 每次显示页面时检查日期，如果日期变了则重新加载
     const date = new Date()
     const newKey = `water_data_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`

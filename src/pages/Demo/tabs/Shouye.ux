@@ -194,6 +194,7 @@
 import storage from '@system.storage'
 
 export default {
+  props: ['isActive'],
   data: {
     todaySteps: 0,
     distance: 0,
@@ -235,6 +236,22 @@ export default {
     this.loadTodayData()
     this.loadStatsData()
     this.loadMedalStatus()
+    
+    this.$watch('isActive', 'onActiveChange')
+  },
+  onActiveChange(newVal) {
+    if (newVal) {
+      this.checkDateAndReload()
+    }
+  },
+  checkDateAndReload() {
+    const now = new Date()
+    if (this.currentDay !== now.getDate() || this.currentMonth !== (now.getMonth() + 1)) {
+      this.currentMonth = now.getMonth() + 1
+      this.currentDay = now.getDate()
+      this.loadTodayData()
+      this.updateStatsAndMedals()
+    }
   },
   loadTodayData() {
     const now = new Date()
@@ -687,7 +704,7 @@ export default {
 .step-circle-wrap {
   align-items: center;
   justify-content: center;
-  height: 248 * $size-factor;
+  height: 228 * $size-factor;
   margin-top: 10 * $size-factor;
   margin-bottom: 10 * $size-factor;
 }
