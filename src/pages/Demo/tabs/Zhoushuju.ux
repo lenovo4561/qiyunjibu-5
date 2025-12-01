@@ -4,13 +4,12 @@
 
     <!-- 周统计卡片 -->
     <div class="summary-card">
-      <div class="summary-header">
-      </div>
+      <div class="summary-header"></div>
       <div class="summary-content">
-        <text class="summary-value">{{totalValue}}</text>
-        <text class="summary-unit">{{unit}}</text>
+        <text class="summary-value">{{ totalValue }}</text>
+        <text class="summary-unit">{{ unit }}</text>
       </div>
-      <text class="summary-avg">日平均值:{{dailyAverage}}</text>
+      <text class="summary-avg">日平均值:{{ dailyAverage }}</text>
     </div>
 
     <!-- 图表/数据卡片 -->
@@ -18,7 +17,7 @@
       <!-- 日期导航 -->
       <div class="date-nav">
         <text class="nav-arrow" @click="prevWeek">&lt;</text>
-        <text class="date-range">{{dateRangeStr}}</text>
+        <text class="date-range">{{ dateRangeStr }}</text>
         <text class="nav-arrow" @click="nextWeek">&gt;</text>
       </div>
 
@@ -26,10 +25,10 @@
       <div class="chart-area">
         <!-- Y轴标签 -->
         <div class="y-axis-labels">
-          <text class="y-label">{{yAxis4}}</text>
-          <text class="y-label">{{yAxis3}}</text>
-          <text class="y-label">{{yAxis2}}</text>
-          <text class="y-label">{{yAxis1}}</text>
+          <text class="y-label">{{ yAxis4 }}</text>
+          <text class="y-label">{{ yAxis3 }}</text>
+          <text class="y-label">{{ yAxis2 }}</text>
+          <text class="y-label">{{ yAxis1 }}</text>
           <text class="y-label">0</text>
         </div>
         <!-- 图表主体 -->
@@ -46,7 +45,11 @@
           <div class="bars-row">
             <div class="bar-col" for="{{(index, item) in weekData}}">
               <div class="bar-track">
-                <div class="bar-fill" style="height: {{item.height}}px;"></div>
+                <div
+                  class="bar-fill"
+                  style="height: {{item.height}}px;"
+                  if="{{item.val > 0}}"
+                ></div>
               </div>
             </div>
           </div>
@@ -57,33 +60,59 @@
         <div class="x-spacer"></div>
         <div class="x-labels-row">
           <div class="x-label-col" for="{{(index, item) in weekData}}">
-            <text class="bar-date">{{item.dateLabel}}</text>
-            <text class="bar-day">{{item.dayLabel}}</text>
+            <text class="bar-date">{{ item.dateLabel }}</text>
+            <text class="bar-day">{{ item.dayLabel }}</text>
           </div>
         </div>
       </div>
-      
+
       <div class="chart-legend">
         <div class="legend-dot"></div>
-        <text class="legend-text">{{currentYearMonth}}</text>
+        <text class="legend-text">{{ currentYearMonth }}</text>
       </div>
 
       <!-- 底部Tab -->
       <div class="bottom-tabs">
-        <div class="tab-item {{currentTab === 'steps' ? 'active-tab' : ''}}" @click="switchTab('steps')">
-          <text class="tab-text {{currentTab === 'steps' ? 'active-text' : ''}}">步数</text>
+        <div
+          class="tab-item {{currentTab === 'steps' ? 'active-tab' : ''}}"
+          @click="switchTab('steps')"
+        >
+          <text class="tab-text {{currentTab === 'steps' ? 'active-text' : ''}}"
+            >步数</text
+          >
         </div>
-        <div class="tab-item {{currentTab === 'duration' ? 'active-tab' : ''}}" @click="switchTab('duration')">
-          <text class="tab-text {{currentTab === 'duration' ? 'active-text' : ''}}">时长</text>
+        <div
+          class="tab-item {{currentTab === 'duration' ? 'active-tab' : ''}}"
+          @click="switchTab('duration')"
+        >
+          <text
+            class="tab-text {{currentTab === 'duration' ? 'active-text' : ''}}"
+            >时长</text
+          >
         </div>
-        <div class="tab-item {{currentTab === 'calories' ? 'active-tab' : ''}}" @click="switchTab('calories')">
-          <text class="tab-text {{currentTab === 'calories' ? 'active-text' : ''}}">消耗</text>
+        <div
+          class="tab-item {{currentTab === 'calories' ? 'active-tab' : ''}}"
+          @click="switchTab('calories')"
+        >
+          <text
+            class="tab-text {{currentTab === 'calories' ? 'active-text' : ''}}"
+            >消耗</text
+          >
         </div>
-        <div class="tab-item {{currentTab === 'distance' ? 'active-tab' : ''}}" @click="switchTab('distance')">
-          <text class="tab-text {{currentTab === 'distance' ? 'active-text' : ''}}">距离</text>
+        <div
+          class="tab-item {{currentTab === 'distance' ? 'active-tab' : ''}}"
+          @click="switchTab('distance')"
+        >
+          <text
+            class="tab-text {{currentTab === 'distance' ? 'active-text' : ''}}"
+            >距离</text
+          >
         </div>
       </div>
     </div>
+
+    <!-- 底部留白 -->
+    <div class="bottom-spacer"></div>
   </div>
 </template>
 
@@ -137,9 +166,11 @@ export default {
     const monday = this.currentMonday
     const sunday = new Date(monday)
     sunday.setDate(monday.getDate() + 6)
-    
-    this.dateRangeStr = `${monday.getMonth() + 1}月${monday.getDate()}日-${sunday.getMonth() + 1}月${sunday.getDate()}日`
-    this.currentYearMonth = `${monday.getFullYear()}年${monday.getMonth() + 1}月`
+
+    this.dateRangeStr = `${monday.getMonth() +
+      1}月${monday.getDate()}日-${sunday.getMonth() + 1}月${sunday.getDate()}日`
+    this.currentYearMonth = `${monday.getFullYear()}年${monday.getMonth() +
+      1}月`
   },
   // 上一周
   prevWeek() {
@@ -162,15 +193,16 @@ export default {
     const monday = this.currentMonday
     const weekRawData = []
     let loadedCount = 0
-    
+
     for (let i = 0; i < 7; i++) {
       const d = new Date(monday)
       d.setDate(monday.getDate() + i)
-      const dateKey = `day_data_${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
-      
+      const dateKey = `day_data_${d.getFullYear()}-${d.getMonth() +
+        1}-${d.getDate()}`
+
       storage.get({
         key: dateKey,
-        success: (data) => {
+        success: data => {
           if (data) {
             const parsed = JSON.parse(data)
             weekRawData[i] = {
@@ -210,7 +242,7 @@ export default {
     const weekData = []
     const now = new Date()
     const todayKey = `${now.getMonth() + 1}.${now.getDate()}`
-    
+
     const dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
     const monday = this.currentMonday
 
@@ -220,14 +252,14 @@ export default {
       else if (tab === 'duration') val = data.duration || 0
       else if (tab === 'calories') val = data.calories || 0
       else if (tab === 'distance') val = data.distance || 0
-      
+
       total += val
       if (val > maxVal) maxVal = val
-      
+
       const d = new Date(monday)
       d.setDate(monday.getDate() + index)
       const dateLabel = `${d.getMonth() + 1}.${d.getDate()}`
-      
+
       weekData.push({
         val: val,
         dateLabel: dateLabel,
@@ -236,7 +268,7 @@ export default {
         height: 0 // Will calc later
       })
     })
-    
+
     // 格式化总值和日均值
     if (tab === 'distance') {
       this.totalValue = total.toFixed(2)
@@ -245,12 +277,12 @@ export default {
       this.totalValue = Math.floor(total).toLocaleString()
       this.dailyAverage = Math.floor(total / 7)
     }
-    
+
     if (tab === 'steps') this.unit = '步'
     else if (tab === 'duration') this.unit = 'min'
     else if (tab === 'calories') this.unit = 'kcal'
     else if (tab === 'distance') this.unit = 'km'
-    
+
     // Scale chart - 根据不同类型设置合适的刻度
     let scaleMax = 0
     if (tab === 'steps') {
@@ -270,20 +302,20 @@ export default {
       if (maxVal === 0) maxVal = 5
       scaleMax = Math.ceil(maxVal) * 1.2
     }
-    
+
     // 格式化Y轴显示 - 5个刻度点 (0, 25%, 50%, 75%, 100%)
     if (tab === 'steps') {
       // 步数用k/w表示
       if (scaleMax >= 10000) {
         this.yAxis4 = (scaleMax / 10000).toFixed(1) + 'w'
-        this.yAxis3 = (scaleMax * 0.75 / 10000).toFixed(1) + 'w'
-        this.yAxis2 = (scaleMax * 0.5 / 10000).toFixed(1) + 'w'
-        this.yAxis1 = (scaleMax * 0.25 / 10000).toFixed(1) + 'w'
+        this.yAxis3 = ((scaleMax * 0.75) / 10000).toFixed(1) + 'w'
+        this.yAxis2 = ((scaleMax * 0.5) / 10000).toFixed(1) + 'w'
+        this.yAxis1 = ((scaleMax * 0.25) / 10000).toFixed(1) + 'w'
       } else {
         this.yAxis4 = (scaleMax / 1000).toFixed(1) + 'k'
-        this.yAxis3 = (scaleMax * 0.75 / 1000).toFixed(1) + 'k'
-        this.yAxis2 = (scaleMax * 0.5 / 1000).toFixed(1) + 'k'
-        this.yAxis1 = (scaleMax * 0.25 / 1000).toFixed(1) + 'k'
+        this.yAxis3 = ((scaleMax * 0.75) / 1000).toFixed(1) + 'k'
+        this.yAxis2 = ((scaleMax * 0.5) / 1000).toFixed(1) + 'k'
+        this.yAxis1 = ((scaleMax * 0.25) / 1000).toFixed(1) + 'k'
       }
     } else if (tab === 'duration') {
       this.yAxis4 = Math.round(scaleMax) + ''
@@ -301,13 +333,13 @@ export default {
       this.yAxis2 = (scaleMax * 0.5).toFixed(1)
       this.yAxis1 = (scaleMax * 0.25).toFixed(1)
     }
-    
+
     // 计算柱状图高度 - 最大高度为 280 * 3 = 840px
     const maxBarHeight = 840
     weekData.forEach(item => {
       item.height = Math.max((item.val / scaleMax) * maxBarHeight, 10) // 最小高度10px
     })
-    
+
     this.weekData = weekData
   }
 }
@@ -325,6 +357,11 @@ export default {
   background-size: 100% 100%;
   background-position: top center;
   padding: 16 * $size-factor;
+}
+
+.bottom-spacer {
+  height: 70 * $size-factor;
+  width: 100%;
 }
 
 .page-title {

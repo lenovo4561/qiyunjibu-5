@@ -14,33 +14,60 @@
     <block if="{{hasAgreed}}">
       <!-- 内容区域 -->
       <div class="content-area">
-        <shouye-tab show="{{currentTab === 'shouye'}}" is-active="{{currentTab === 'shouye'}}"></shouye-tab>
-        <heshui-tab show="{{currentTab === 'heshui'}}" is-active="{{currentTab === 'heshui'}}"></heshui-tab>
-        <zhoushuju-tab show="{{currentTab === 'zhoushuju'}}" is-active="{{currentTab === 'zhoushuju'}}"></zhoushuju-tab>
-        <mine-tab show="{{currentTab === 'mine'}}" is-active="{{currentTab === 'mine'}}"></mine-tab>
+        <shouye-tab if="{{currentTab === 'shouye'}}"></shouye-tab>
+        <heshui-tab if="{{currentTab === 'heshui'}}"></heshui-tab>
+        <zhoushuju-tab if="{{currentTab === 'zhoushuju'}}"></zhoushuju-tab>
+        <mine-tab if="{{currentTab === 'mine'}}"></mine-tab>
       </div>
-      
+
       <!-- 底部导航栏 -->
       <div class="bottom-nav">
         <div class="nav-item" @click="switchTab('shouye')">
-          <image class="nav-icon" src="{{currentTab === 'shouye' ? '/pages/Demo/assets/img/bushu-s.png' : '/pages/Demo/assets/img/bushu-u.png'}}"></image>
-          <text class="nav-text {{currentTab === 'shouye' ? 'nav-text-active' : ''}}">首页</text>
+          <image
+            class="nav-icon"
+            src="{{currentTab === 'shouye' ? '/pages/Demo/assets/img/bushu-s.png' : '/pages/Demo/assets/img/bushu-u.png'}}"
+          ></image>
+          <text
+            class="nav-text {{currentTab === 'shouye' ? 'nav-text-active' : ''}}"
+            >首页</text
+          >
         </div>
         <div class="nav-item" @click="switchTab('heshui')">
-          <image class="nav-icon" src="{{currentTab === 'heshui' ? '/pages/Demo/assets/img/heshui-s.png' : '/pages/Demo/assets/img/heshui-u.png'}}"></image>
-          <text class="nav-text {{currentTab === 'heshui' ? 'nav-text-active' : ''}}">喝水</text>
+          <image
+            class="nav-icon"
+            src="{{currentTab === 'heshui' ? '/pages/Demo/assets/img/heshui-s.png' : '/pages/Demo/assets/img/heshui-u.png'}}"
+          ></image>
+          <text
+            class="nav-text {{currentTab === 'heshui' ? 'nav-text-active' : ''}}"
+            >喝水</text
+          >
         </div>
         <div class="nav-item" @click="switchTab('zhoushuju')">
-          <image class="nav-icon" src="{{currentTab === 'zhoushuju' ? '/pages/Demo/assets/img/zhoushuju-s.png' : '/pages/Demo/assets/img/zhoushuju-u.png'}}"></image>
-          <text class="nav-text {{currentTab === 'zhoushuju' ? 'nav-text-active' : ''}}">周数据</text>
+          <image
+            class="nav-icon"
+            src="{{currentTab === 'zhoushuju' ? '/pages/Demo/assets/img/zhoushuju-s.png' : '/pages/Demo/assets/img/zhoushuju-u.png'}}"
+          ></image>
+          <text
+            class="nav-text {{currentTab === 'zhoushuju' ? 'nav-text-active' : ''}}"
+            >周数据</text
+          >
         </div>
         <div class="nav-item" @click="switchTab('mine')">
-          <image class="nav-icon" src="{{currentTab === 'mine' ? '/pages/Demo/assets/img/mine-s.png' : '/pages/Demo/assets/img/mine-u.png'}}"></image>
-          <text class="nav-text {{currentTab === 'mine' ? 'nav-text-active' : ''}}">我的</text>
+          <image
+            class="nav-icon"
+            src="{{currentTab === 'mine' ? '/pages/Demo/assets/img/mine-s.png' : '/pages/Demo/assets/img/mine-u.png'}}"
+          ></image>
+          <text
+            class="nav-text {{currentTab === 'mine' ? 'nav-text-active' : ''}}"
+            >我的</text
+          >
         </div>
       </div>
     </block>
-    <privacy-modal if="{{showPrivacyModal}}" @agree-evt="onAgree"></privacy-modal>
+    <privacy-modal
+      if="{{showPrivacyModal}}"
+      @agree-evt="onAgree"
+    ></privacy-modal>
   </div>
 </template>
 
@@ -94,7 +121,7 @@ export default {
         this.hasAgreed = true
         this.showPrivacyModal = false
       },
-      fail: (err) => {
+      fail: err => {
         console.error('Failed to save privacy agreement:', err)
         this.hasAgreed = true
         this.showPrivacyModal = false

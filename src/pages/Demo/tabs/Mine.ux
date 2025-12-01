@@ -9,27 +9,42 @@
     <!-- 其他服务 -->
     <div class="services-section">
       <text class="section-title">其他服务</text>
-      
+
       <div class="service-card">
         <!-- 用户协议 -->
         <div class="service-item" @click="openAgreement">
           <div class="item-left">
-            <image class="item-icon" src="/pages/Demo/assets/img/yonghuxieyi.png"></image>
+            <image
+              class="item-icon"
+              src="/pages/Demo/assets/img/yonghuxieyi.png"
+            ></image>
             <text class="item-text">用户协议</text>
           </div>
-          <image class="arrow-icon" src="/pages/Demo/assets/img/jiantou.png"></image>
+          <image
+            class="arrow-icon"
+            src="/pages/Demo/assets/img/jiantou.png"
+          ></image>
         </div>
 
         <!-- 隐私政策 -->
         <div class="service-item" @click="openPrivacy">
           <div class="item-left">
-            <image class="item-icon" src="/pages/Demo/assets/img/yinsizhengce-1.png"></image>
+            <image
+              class="item-icon"
+              src="/pages/Demo/assets/img/yinsizhengce-1.png"
+            ></image>
             <text class="item-text">隐私政策</text>
           </div>
-          <image class="arrow-icon" src="/pages/Demo/assets/img/jiantou.png"></image>
+          <image
+            class="arrow-icon"
+            src="/pages/Demo/assets/img/jiantou.png"
+          ></image>
         </div>
       </div>
     </div>
+
+    <!-- 底部留白 -->
+    <div class="bottom-spacer"></div>
   </div>
 </template>
 
@@ -43,7 +58,8 @@ export default {
     router.push({
       uri: '/pages/Web',
       params: {
-        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.qiyunjbcl.walkcloudqy',
+        url:
+          'https://api.51dsp.cn/index/agreement.do?pn=com.qiyunjbcl.walkcloudqy',
         title: '用户协议'
       }
     })
@@ -52,7 +68,8 @@ export default {
     router.push({
       uri: '/pages/Web',
       params: {
-        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.qiyunjbcl.walkcloudqy',
+        url:
+          'https://api.51dsp.cn/index/privacy.do?pn=com.qiyunjbcl.walkcloudqy',
         title: '隐私政策'
       }
     })
@@ -70,6 +87,11 @@ export default {
   background-image: url('/pages/Demo/assets/img/loading-bg.png');
   background-size: 100% 100%;
   padding: 20 * $size-factor;
+}
+
+.bottom-spacer {
+  height: 70 * $size-factor;
+  width: 100%;
 }
 
 .user-header {

@@ -1,86 +1,110 @@
 <template>
   <div class="page-container">
-    <scroll class="scroll-container" scroll-y="true">
-      <div class="content-wrapper">
-        <!-- 饮水量卡片 -->
-        <div class="water-card">
-          <div class="card-header">
-            <div class="title-group">
-              <!-- 背景图片已包含"今日饮水量"文案 -->
-            </div>
-            <div class="date-group">
-              <text class="date-month">{{currentMonth}}月</text>
-              <text class="date-day">{{currentDay}}</text>
-              <text class="date-label">今日</text>
-            </div>
-          </div>
-          
-          <div class="water-info">
-            <div class="amount-group">
-              <text class="amount-num">{{formattedAmount}}</text>
-              <text class="amount-unit">ml</text>
-            </div>
-            <div class="icon-bg"></div>
-          </div>
+    <!-- 饮水量卡片 -->
+    <div class="water-card">
+      <div class="card-header">
+        <div class="title-group">
+          <!-- 背景图片已包含"今日饮水量"文案 -->
         </div>
-
-        <!-- 立即喝水按钮 -->
-        <div class="action-btn" onclick="openModal">
-          <text class="btn-text">立即喝水</text>
-          <image class="btn-icon" src="/pages/Demo/assets/img/yanjing2.png"></image>
-        </div>
-
-        <!-- 模态框 -->
-        <div class="modal-mask" if="{{showModal}}">
-          <div class="modal-content">
-            <text class="modal-title">立即喝水</text>
-            <text class="modal-subtitle">本次饮水量</text>
-            <div class="input-wrapper">
-              <input class="modal-input" type="number" placeholder="请输入本次饮水量" value="{{inputAmount}}" onchange="updateInput"></input>
-              <text class="input-unit">ml</text>
-            </div>
-            <div class="modal-btns">
-              <div class="modal-btn cancel-btn" onclick="closeModal">
-                <text class="btn-text-black">取消</text>
-              </div>
-              <div class="modal-btn confirm-btn" onclick="confirmWater">
-                <text class="btn-text-white">喝水</text>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 信息卡片 1 -->
-        <div class="info-card">
-          <div class="info-header">
-            <text class="info-title">成人基础饮水量</text>
-            <image class="eye-icon-small" src="/pages/Demo/assets/img/yanjing.png"></image>
-          </div>
-          <text class="info-content">健康成年人每日推荐饮用1500-1700毫升(约7-8杯，每杯200-250毫升)，此为温和气候、轻体力活动下的基准值。</text>
-        </div>
-
-        <!-- 信息卡片 2 -->
-        <div class="info-card">
-          <div class="info-header">
-            <text class="info-title">特殊人群调整</text>
-            <image class="eye-icon-small" src="/pages/Demo/assets/img/yanjing.png"></image>
-          </div>
-          <text class="info-content">1、男性/重体力劳动者/高温环境工作者:每日需1700-2000毫升，出汗多时可适当增加。</text>
-          <text class="info-content">2、女性/老年人/久坐人群:基础量1500毫升即可，避免过量增加肾脏负担。</text>
-          <text class="info-content">3、孕妇:每日1700毫升左右，哺乳期增至2100毫升(需兼顾乳汁分泌)。4、儿童:按年龄估算，2-5岁约800-1000毫升:</text>
-          <text class="info-content">6-12岁约1000-1400毫升(少量多次饮用)</text>
-        </div>
-
-        <!-- 信息卡片 3 -->
-        <div class="info-card">
-          <div class="info-header">
-            <text class="info-title">喝水节奏建议</text>
-            <image class="eye-icon-small" src="/pages/Demo/assets/img/yanjing.png"></image>
-          </div>
-          <text class="info-content">建议少量多次饮水，避免短时间内大量饮水加重肾脏负担。早起空腹一杯水，有助于促进新陈代谢；睡前少量饮水，避免夜间口渴。</text>
+        <div class="date-group">
+          <text class="date-month">{{ currentMonth }}月</text>
+          <text class="date-day">{{ currentDay }}</text>
+          <text class="date-label">今日</text>
         </div>
       </div>
-    </scroll>
+
+      <div class="water-info">
+        <div class="amount-group">
+          <text class="amount-num">{{ formattedAmount }}</text>
+          <text class="amount-unit">ml</text>
+        </div>
+        <div class="icon-bg"></div>
+      </div>
+    </div>
+
+    <!-- 立即喝水按钮 -->
+    <div class="action-btn" onclick="openModal">
+      <text class="btn-text">立即喝水</text>
+      <image class="btn-icon" src="/pages/Demo/assets/img/yanjing2.png"></image>
+    </div>
+
+    <!-- 信息卡片 1 -->
+    <div class="info-card">
+      <div class="info-header">
+        <text class="info-title">成人基础饮水量</text>
+        <image
+          class="eye-icon-small"
+          src="/pages/Demo/assets/img/yanjing.png"
+        ></image>
+      </div>
+      <text class="info-content"
+        >健康成年人每日推荐饮用1500-1700毫升(约7-8杯，每杯200-250毫升)，此为温和气候、轻体力活动下的基准值。</text
+      >
+    </div>
+
+    <!-- 信息卡片 2 -->
+    <div class="info-card">
+      <div class="info-header">
+        <text class="info-title">特殊人群调整</text>
+        <image
+          class="eye-icon-small"
+          src="/pages/Demo/assets/img/yanjing.png"
+        ></image>
+      </div>
+      <text class="info-content"
+        >1、男性/重体力劳动者/高温环境工作者:每日需1700-2000毫升，出汗多时可适当增加。</text
+      >
+      <text class="info-content"
+        >2、女性/老年人/久坐人群:基础量1500毫升即可，避免过量增加肾脏负担。</text
+      >
+      <text class="info-content"
+        >3、孕妇:每日1700毫升左右，哺乳期增至2100毫升(需兼顾乳汁分泌)。4、儿童:按年龄估算，2-5岁约800-1000毫升:</text
+      >
+      <text class="info-content">6-12岁约1000-1400毫升(少量多次饮用)</text>
+    </div>
+
+    <!-- 信息卡片 3 -->
+    <div class="info-card">
+      <div class="info-header">
+        <text class="info-title">喝水节奏建议</text>
+        <image
+          class="eye-icon-small"
+          src="/pages/Demo/assets/img/yanjing.png"
+        ></image>
+      </div>
+      <text class="info-content"
+        >建议少量多次饮水，避免短时间内大量饮水加重肾脏负担。早起空腹一杯水，有助于促进新陈代谢；睡前少量饮水，避免夜间口渴。</text
+      >
+    </div>
+
+    <!-- 底部留白 -->
+    <div class="bottom-spacer"></div>
+
+    <!-- 模态框 -->
+    <div class="modal-mask" if="{{showModal}}">
+      <div class="modal-content">
+        <text class="modal-title">立即喝水</text>
+        <text class="modal-subtitle">本次饮水量</text>
+        <div class="input-wrapper">
+          <input
+            class="modal-input"
+            type="number"
+            placeholder="请输入本次饮水量"
+            value="{{inputAmount}}"
+            onchange="updateInput"
+          />
+          <text class="input-unit">ml</text>
+        </div>
+        <div class="modal-btns">
+          <div class="modal-btn cancel-btn" onclick="closeModal">
+            <text class="btn-text-black">取消</text>
+          </div>
+          <div class="modal-btn confirm-btn" onclick="confirmWater">
+            <text class="btn-text-white">喝水</text>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -107,9 +131,10 @@ export default {
     this.currentMonth = date.getMonth() + 1
     this.currentDay = date.getDate()
     // 生成今日的存储key
-    this.todayKey = `water_data_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    this.todayKey = `water_data_${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`
     this.loadTodayWater()
-    
+
     // 监听 isActive 变化
     this.$watch('isActive', 'onActiveChange')
   },
@@ -124,7 +149,8 @@ export default {
   checkDateAndReload() {
     // 每次显示页面时检查日期，如果日期变了则重新加载
     const date = new Date()
-    const newKey = `water_data_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const newKey = `water_data_${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`
     if (newKey !== this.todayKey) {
       this.currentMonth = date.getMonth() + 1
       this.currentDay = date.getDate()
@@ -137,7 +163,7 @@ export default {
   loadTodayWater() {
     storage.get({
       key: this.todayKey,
-      success: (data) => {
+      success: data => {
         if (data) {
           this.waterAmount = parseInt(data) || 0
         } else {
@@ -181,22 +207,18 @@ export default {
 @import './../assets/styles/style.scss';
 
 .page-container {
+  flex: 1;
   flex-direction: column;
+  width: 100%;
   background-image: url('/pages/Demo/assets/img/bg.png');
   background-size: 100% 100%;
   background-position: top center;
-}
-
-.scroll-container {
-  flex: 1;
-  flex-direction: column;
   padding: 12 * $size-factor;
 }
 
-.content-wrapper {
-  flex-direction: column;
+.bottom-spacer {
+  height: 70 * $size-factor;
   width: 100%;
-  padding-bottom: 20 * $size-factor;
 }
 
 /* 饮水量卡片 */

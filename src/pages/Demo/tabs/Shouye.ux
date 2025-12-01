@@ -1,163 +1,144 @@
 <template>
   <div class="page-container">
-    <!-- 编辑模态框 -->
-    <div class="edit-modal" if="{{showEditModal}}">
-      <div class="edit-modal-content">
-        <div class="edit-modal-header">
-          <text class="edit-modal-title">数据编辑</text>
-          <text class="edit-modal-close" @click="closeEditModal">×</text>
+    <!-- 今日运动步数卡片 -->
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-text-group">
+          <div class="today-row">
+            <text class="step-title-big">今日</text>
+            <image
+              class="eye-icon-big"
+              src="/pages/Demo/assets/img/yanjing.png"
+            ></image>
+          </div>
+          <text class="step-subtitle-big">运动步数</text>
         </div>
-        
-        <div class="edit-form">
-          <text class="edit-form-label">运动时长 (分钟)</text>
-          <input class="edit-form-input" type="number" placeholder="请输入运动时长" value="{{editDuration}}" @change="onDurationChange" />
-          
-          <text class="edit-form-label">运动距离 (公里)</text>
-          <input class="edit-form-input" type="number" placeholder="请输入运动距离" value="{{editDistance}}" @change="onDistanceChange" />
+        <div class="date-wrap">
+          <text class="date-month">{{ currentMonth }}月</text>
+          <text class="date-day">{{ currentDay }}</text>
+          <text class="date-label">今日</text>
         </div>
-        
-        <div class="edit-modal-btns">
-          <text class="edit-modal-btn cancel-btn" @click="closeEditModal">取消</text>
-          <text class="edit-modal-btn confirm-btn" @click="confirmEdit">添加</text>
+      </div>
+
+      <!-- 步数圆环 -->
+      <div class="step-circle-wrap">
+        <div class="step-circle">
+          <div class="step-circle-inner">
+            <text class="step-label">今日步数</text>
+            <text class="step-count">{{ todaySteps }}</text>
+            <text class="step-unit">步</text>
+          </div>
         </div>
       </div>
     </div>
 
-    <scroll class="scroll-container" scroll-y="true">
-      <div class="content-wrapper">
-        <!-- 今日运动步数卡片 -->
-        <div class="step-card">
-          <div class="step-card-header">
-            <div class="step-text-group">
-              <div class="today-row">
-                <text class="step-title-big">今日</text>
-                <image class="eye-icon-big" src="/pages/Demo/assets/img/yanjing.png"></image>
-              </div>
-              <text class="step-subtitle-big">运动步数</text>
-              <image class="qiyun-text-img" src="/pages/Demo/assets/img/琦云计步.png"></image>
-            </div>
-            <div class="date-wrap">
-              <text class="date-month">{{currentMonth}}月</text>
-              <text class="date-day">{{currentDay}}</text>
-              <text class="date-label">今日</text>
-            </div>
-          </div>
-          
-          <!-- 步数圆环 -->
-          <div class="step-circle-wrap">
-            <div class="step-circle">
-              <div class="step-circle-inner">
-                <text class="step-label">今日步数</text>
-                <text class="step-count">{{todaySteps}}</text>
-                <text class="step-unit">步</text>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 今日数据卡片 -->
-        <div class="data-card">
-          <div class="data-card-header">
-            <text class="data-title">今日数据</text>
-            <div class="edit-btn" @click="openEditModal">
-              <text class="edit-text">编辑</text>
-              <image class="eye-icon-small" src="/pages/Demo/assets/img/yanjing2.png"></image>
-            </div>
-          </div>
-          <div class="data-stats">
-            <div class="stat-item">
-              <text class="stat-value">{{distance}}</text>
-              <text class="stat-label">运动距离(km)</text>
-            </div>
-            <div class="stat-item">
-              <text class="stat-value">{{duration}}</text>
-              <text class="stat-label">运动时长(min)</text>
-            </div>
-            <div class="stat-item">
-              <text class="stat-value">{{calories}}</text>
-              <text class="stat-label">热量消耗(kcal)</text>
-            </div>
-          </div>
-        </div>
-
-        <!-- 勋章墙卡片 -->
-        <div class="medal-card">
-          <text class="medal-title">勋章墙</text>
-          
-          <!-- 第一行：单日步数 + 累计步数前两个 -->
-          <div class="medal-row">
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.daily5000}}"></image>
-              <text class="medal-label">单日5000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.daily10000}}"></image>
-              <text class="medal-label">单日10000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.daily20000}}"></image>
-              <text class="medal-label">单日20000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.total10000}}"></image>
-              <text class="medal-label">累计10000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.total20000}}"></image>
-              <text class="medal-label">累计20000步</text>
-            </div>
-          </div>
-
-          <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
-          <div class="medal-row">
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.total50000}}"></image>
-              <text class="medal-label">累计50000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.total100000}}"></image>
-              <text class="medal-label">累计100000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.total200000}}"></image>
-              <text class="medal-label">累计200000步</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record1day}}"></image>
-              <text class="medal-label">坚持记录1天</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record1week}}"></image>
-              <text class="medal-label">坚持记录1周</text>
-            </div>
-          </div>
-
-          <!-- 第三行：坚持记录后五个 -->
-          <div class="medal-row">
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record1month}}"></image>
-              <text class="medal-label">坚持记录1月</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record3month}}"></image>
-              <text class="medal-label">坚持记录3月</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record6month}}"></image>
-              <text class="medal-label">坚持记录6月</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record1year}}"></image>
-              <text class="medal-label">坚持记录1年</text>
-            </div>
-            <div class="medal-item">
-              <image class="medal-icon" src="{{medals.record2year}}"></image>
-              <text class="medal-label">坚持记录2年</text>
-            </div>
-          </div>
+    <!-- 今日数据卡片 -->
+    <div class="data-card">
+      <div class="data-card-header">
+        <text class="data-title">今日数据</text>
+        <div class="edit-btn" @click="openEditModal">
+          <text class="edit-text">编辑</text>
+          <image
+            class="eye-icon-small"
+            src="/pages/Demo/assets/img/yanjing2.png"
+          ></image>
         </div>
       </div>
-    </scroll>
+      <div class="data-stats">
+        <div class="stat-item">
+          <text class="stat-value">{{ distance }}</text>
+          <text class="stat-label">运动距离(km)</text>
+        </div>
+        <div class="stat-item">
+          <text class="stat-value">{{ duration }}</text>
+          <text class="stat-label">运动时长(min)</text>
+        </div>
+        <div class="stat-item">
+          <text class="stat-value">{{ calories }}</text>
+          <text class="stat-label">热量消耗(kcal)</text>
+        </div>
+      </div>
+    </div>
+
+    <!-- 勋章墙卡片 -->
+    <div class="medal-card">
+      <text class="medal-title">勋章墙</text>
+
+      <!-- 第一行：单日步数 + 累计步数前两个 -->
+      <div class="medal-row">
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.daily5000}}"></image>
+          <text class="medal-label">单日5000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.daily10000}}"></image>
+          <text class="medal-label">单日10000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.daily20000}}"></image>
+          <text class="medal-label">单日20000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.total10000}}"></image>
+          <text class="medal-label">累计10000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.total20000}}"></image>
+          <text class="medal-label">累计20000步</text>
+        </div>
+      </div>
+
+      <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
+      <div class="medal-row">
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.total50000}}"></image>
+          <text class="medal-label">累计50000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.total100000}}"></image>
+          <text class="medal-label">累计100000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.total200000}}"></image>
+          <text class="medal-label">累计200000步</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record1day}}"></image>
+          <text class="medal-label">坚持记录1天</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record1week}}"></image>
+          <text class="medal-label">坚持记录1周</text>
+        </div>
+      </div>
+
+      <!-- 第三行：坚持记录后五个 -->
+      <div class="medal-row">
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record1month}}"></image>
+          <text class="medal-label">坚持记录1月</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record3month}}"></image>
+          <text class="medal-label">坚持记录3月</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record6month}}"></image>
+          <text class="medal-label">坚持记录6月</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record1year}}"></image>
+          <text class="medal-label">坚持记录1年</text>
+        </div>
+        <div class="medal-item">
+          <image class="medal-icon" src="{{medals.record2year}}"></image>
+          <text class="medal-label">坚持记录2年</text>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部留白 -->
+    <div class="bottom-spacer"></div>
 
     <!-- 编辑数据弹窗 -->
     <div class="edit-modal" if="{{showEditModal}}">
@@ -168,15 +149,27 @@
             <text class="edit-modal-close">×</text>
           </div>
         </div>
-        
+
         <div class="edit-form">
           <text class="edit-form-label">运动时长 (分钟)</text>
-          <input class="edit-form-input" type="number" placeholder="请输入运动时长" value="{{editDuration}}" @change="onDurationChange"></input>
-          
+          <input
+            class="edit-form-input"
+            type="number"
+            placeholder="请输入运动时长"
+            value="{{editDuration}}"
+            @change="onDurationChange"
+          />
+
           <text class="edit-form-label">运动距离 (公里)</text>
-          <input class="edit-form-input" type="number" placeholder="请输入运动距离" value="{{editDistance}}" @change="onDistanceChange"></input>
+          <input
+            class="edit-form-input"
+            type="number"
+            placeholder="请输入运动距离"
+            value="{{editDistance}}"
+            @change="onDistanceChange"
+          />
         </div>
-        
+
         <div class="edit-btn-group">
           <div class="edit-btn-wrapper delete-btn" @click="closeEditModal">
             <text class="btn-text-black">删除</text>
@@ -206,6 +199,9 @@ export default {
     editDuration: '',
     editDistance: '',
     editSteps: '',
+    // 内部变量，用于增量更新
+    lastSyncedSteps: 0,
+    recordedDates: [],
     // 累计数据
     totalSteps: 0,
     recordDays: 0,
@@ -236,8 +232,11 @@ export default {
     this.loadTodayData()
     this.loadStatsData()
     this.loadMedalStatus()
-    
+
     this.$watch('isActive', 'onActiveChange')
+  },
+  onDestroy() {
+    // 清理工作
   },
   onActiveChange(newVal) {
     if (newVal) {
@@ -246,7 +245,10 @@ export default {
   },
   checkDateAndReload() {
     const now = new Date()
-    if (this.currentDay !== now.getDate() || this.currentMonth !== (now.getMonth() + 1)) {
+    if (
+      this.currentDay !== now.getDate() ||
+      this.currentMonth !== now.getMonth() + 1
+    ) {
       this.currentMonth = now.getMonth() + 1
       this.currentDay = now.getDate()
       this.loadTodayData()
@@ -255,16 +257,19 @@ export default {
   },
   loadTodayData() {
     const now = new Date()
-    const dateKey = `day_data_${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+    const dateKey = `day_data_${now.getFullYear()}-${now.getMonth() +
+      1}-${now.getDate()}`
     storage.get({
       key: dateKey,
-      success: (data) => {
+      success: data => {
         if (data) {
           const parsed = JSON.parse(data)
           this.todaySteps = parsed.steps || 0
           this.distance = parsed.distance || 0
           this.duration = parsed.duration || 0
           this.calories = parsed.calories || 0
+          // 记录初始步数，用于计算增量
+          this.lastSyncedSteps = this.todaySteps
         }
       }
     })
@@ -290,26 +295,29 @@ export default {
   confirmEdit() {
     const newDuration = parseFloat(this.editDuration) || 0
     const newDistance = parseFloat(this.editDistance) || 0
-    
+
     // 公式：1米=1步=0.05千卡
     // 步数计算：距离(km) * 1000 = 步数
     const newSteps = Math.round(newDistance * 1000)
-    
+
     // 热量计算：步数 * 0.05 千卡
     const newCalories = Math.round(newSteps * 0.05)
-    
+
     // 时长单独显示，不参与计算
     this.todaySteps = newSteps
     this.duration = newDuration
     this.distance = newDistance
     this.calories = newCalories
-    
+
     this.saveData()
     this.showEditModal = false
   },
   saveData() {
     const now = new Date()
-    const dateKey = `day_data_${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+    const dateKey = `day_data_${now.getFullYear()}-${now.getMonth() +
+      1}-${now.getDate()}`
+
+    // 1. 保存今日数据
     const data = {
       steps: this.todaySteps,
       duration: this.duration,
@@ -320,20 +328,53 @@ export default {
       key: dateKey,
       value: JSON.stringify(data)
     })
-    // 更新累计数据和勋章
-    this.updateStatsAndMedals()
+
+    // 2. 增量更新累计数据（避免遍历读取文件）
+    const stepDiff = this.todaySteps - this.lastSyncedSteps
+    this.lastSyncedSteps = this.todaySteps // 更新基准值
+
+    if (stepDiff !== 0 || !this.recordedDates.includes(dateKey)) {
+      this.totalSteps += stepDiff
+      this.maxDailySteps = Math.max(this.maxDailySteps, this.todaySteps)
+
+      // 如果是新的一天
+      if (!this.recordedDates.includes(dateKey)) {
+        this.recordDays += 1
+        this.recordedDates.push(dateKey)
+      }
+
+      // 保存统计数据
+      const stats = {
+        totalSteps: this.totalSteps,
+        recordDays: this.recordDays,
+        maxDailySteps: this.maxDailySteps,
+        recordedDates: this.recordedDates
+      }
+
+      storage.set({
+        key: 'stats_data',
+        value: JSON.stringify(stats)
+      })
+    }
+
+    // 3. 更新勋章状态
+    this.updateMedals()
   },
-  
+
   // 加载累计统计数据
   loadStatsData() {
     storage.get({
       key: 'stats_data',
-      success: (data) => {
+      success: data => {
         if (data) {
           const parsed = JSON.parse(data)
           this.totalSteps = parsed.totalSteps || 0
           this.recordDays = parsed.recordDays || 0
           this.maxDailySteps = parsed.maxDailySteps || 0
+          this.recordedDates = parsed.recordedDates || []
+
+          // 检查当天是否已计入（防止数据不一致）
+          this.checkTodayInStats()
         }
         this.updateMedals()
       },
@@ -342,144 +383,101 @@ export default {
       }
     })
   },
-  
-  // 更新累计数据和勋章
-  updateStatsAndMedals() {
+
+  // 确保今天的步数正确计入总数
+  checkTodayInStats() {
     const now = new Date()
-    const todayKey = `day_data_${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
-    
-    storage.get({
-      key: 'stats_data',
-      success: (statsData) => {
-        let stats = statsData ? JSON.parse(statsData) : { totalSteps: 0, recordDays: 0, maxDailySteps: 0, recordedDates: [] }
-        
-        // 检查今天是否已记录过
-        if (!stats.recordedDates) {
-          stats.recordedDates = []
-        }
-        
-        if (!stats.recordedDates.includes(todayKey)) {
-          // 新的一天记录
-          stats.recordDays = (stats.recordDays || 0) + 1
-          stats.recordedDates.push(todayKey)
-        }
-        
-        // 更新累计步数（需要重新计算，避免重复累加）
-        this.recalculateTotalSteps(stats)
-      },
-      fail: () => {
-        // 首次记录
-        const stats = {
-          totalSteps: this.todaySteps,
-          recordDays: 1,
-          maxDailySteps: this.todaySteps,
-          recordedDates: [todayKey]
-        }
-        this.saveStatsAndUpdateMedals(stats)
-      }
-    })
-  },
-  
-  // 重新计算累计步数
-  recalculateTotalSteps(stats) {
-    let totalSteps = 0
-    let maxDailySteps = 0
-    let processed = 0
-    const dates = stats.recordedDates || []
-    
-    if (dates.length === 0) {
-      stats.totalSteps = this.todaySteps
-      stats.maxDailySteps = this.todaySteps
-      this.saveStatsAndUpdateMedals(stats)
-      return
-    }
-    
-    dates.forEach((dateKey) => {
-      storage.get({
-        key: dateKey,
-        success: (dayData) => {
-          if (dayData) {
-            const parsed = JSON.parse(dayData)
-            const steps = parsed.steps || 0
-            totalSteps += steps
-            if (steps > maxDailySteps) {
-              maxDailySteps = steps
-            }
-          }
-          processed++
-          if (processed === dates.length) {
-            stats.totalSteps = totalSteps
-            stats.maxDailySteps = maxDailySteps
-            this.saveStatsAndUpdateMedals(stats)
-          }
-        },
-        fail: () => {
-          processed++
-          if (processed === dates.length) {
-            stats.totalSteps = totalSteps
-            stats.maxDailySteps = maxDailySteps
-            this.saveStatsAndUpdateMedals(stats)
-          }
-        }
+    const todayKey = `day_data_${now.getFullYear()}-${now.getMonth() +
+      1}-${now.getDate()}`
+
+    if (!this.recordedDates.includes(todayKey)) {
+      // 如果今天还没记录过，说明是新的一天，直接把今天的步数加进去
+      this.totalSteps += this.todaySteps
+      this.recordDays += 1
+      this.recordedDates.push(todayKey)
+      this.maxDailySteps = Math.max(this.maxDailySteps, this.todaySteps)
+
+      // 保存修正后的统计
+      storage.set({
+        key: 'stats_data',
+        value: JSON.stringify({
+          totalSteps: this.totalSteps,
+          recordDays: this.recordDays,
+          maxDailySteps: this.maxDailySteps,
+          recordedDates: this.recordedDates
+        })
       })
-    })
+    }
   },
-  
-  // 保存统计数据并更新勋章
-  saveStatsAndUpdateMedals(stats) {
-    this.totalSteps = stats.totalSteps
-    this.recordDays = stats.recordDays
-    this.maxDailySteps = stats.maxDailySteps
-    
-    storage.set({
-      key: 'stats_data',
-      value: JSON.stringify(stats)
-    })
-    
+
+  // 仅仅更新勋章（checkDateAndReload中调用）
+  updateStatsAndMedals() {
+    this.checkTodayInStats()
     this.updateMedals()
   },
-  
+
   // 加载勋章点亮状态
   loadMedalStatus() {
     storage.get({
       key: 'medal_status',
-      success: (data) => {
+      success: data => {
         if (data) {
           const status = JSON.parse(data)
           // 根据已保存的点亮状态更新勋章图标
-          if (status.daily5000) this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
-          if (status.daily10000) this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
-          if (status.daily20000) this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
-          if (status.total10000) this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
-          if (status.total20000) this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
-          if (status.total50000) this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
-          if (status.total100000) this.medals.total100000 = '/pages/Demo/assets/img/Group 691314613 2.png'
-          if (status.total200000) this.medals.total200000 = '/pages/Demo/assets/img/Group 691314615 2.png'
-          if (status.record1day) this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
-          if (status.record1week) this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
-          if (status.record1month) this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
-          if (status.record3month) this.medals.record3month = '/pages/Demo/assets/img/Group 691314613 3.png'
-          if (status.record6month) this.medals.record6month = '/pages/Demo/assets/img/Group 691314615 3.png'
-          if (status.record1year) this.medals.record1year = '/pages/Demo/assets/img/Group 691314613 1.png'
-          if (status.record2year) this.medals.record2year = '/pages/Demo/assets/img/Group 691314615 1.png'
+          if (status.daily5000)
+            this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
+          if (status.daily10000)
+            this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
+          if (status.daily20000)
+            this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
+          if (status.total10000)
+            this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
+          if (status.total20000)
+            this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
+          if (status.total50000)
+            this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
+          if (status.total100000)
+            this.medals.total100000 =
+              '/pages/Demo/assets/img/Group 691314613 2.png'
+          if (status.total200000)
+            this.medals.total200000 =
+              '/pages/Demo/assets/img/Group 691314615 2.png'
+          if (status.record1day)
+            this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
+          if (status.record1week)
+            this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
+          if (status.record1month)
+            this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
+          if (status.record3month)
+            this.medals.record3month =
+              '/pages/Demo/assets/img/Group 691314613 3.png'
+          if (status.record6month)
+            this.medals.record6month =
+              '/pages/Demo/assets/img/Group 691314615 3.png'
+          if (status.record1year)
+            this.medals.record1year =
+              '/pages/Demo/assets/img/Group 691314613 1.png'
+          if (status.record2year)
+            this.medals.record2year =
+              '/pages/Demo/assets/img/Group 691314615 1.png'
         }
       }
     })
   },
-  
+
   // 更新勋章状态（只点亮，不熄灭）
   updateMedals() {
     const todaySteps = this.todaySteps
     const maxDaily = this.maxDailySteps
     const total = this.totalSteps
     const days = this.recordDays
-    
+
     // 先加载已有的勋章状态
     storage.get({
       key: 'medal_status',
-      success: (data) => {
+      success: data => {
         let status = data ? JSON.parse(data) : {}
-        
+
         // 单日步数勋章（只点亮，不熄灭）
         const dailyCheck = Math.max(todaySteps, maxDaily)
         if (dailyCheck >= 5000 && !status.daily5000) {
@@ -494,7 +492,7 @@ export default {
           status.daily20000 = true
           this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
         }
-        
+
         // 累计步数勋章
         if (total >= 10000 && !status.total10000) {
           status.total10000 = true
@@ -510,13 +508,15 @@ export default {
         }
         if (total >= 100000 && !status.total100000) {
           status.total100000 = true
-          this.medals.total100000 = '/pages/Demo/assets/img/Group 691314613 2.png'
+          this.medals.total100000 =
+            '/pages/Demo/assets/img/Group 691314613 2.png'
         }
         if (total >= 200000 && !status.total200000) {
           status.total200000 = true
-          this.medals.total200000 = '/pages/Demo/assets/img/Group 691314615 2.png'
+          this.medals.total200000 =
+            '/pages/Demo/assets/img/Group 691314615 2.png'
         }
-        
+
         // 坚持记录勋章
         if (days >= 1 && !status.record1day) {
           status.record1day = true
@@ -532,21 +532,25 @@ export default {
         }
         if (days >= 90 && !status.record3month) {
           status.record3month = true
-          this.medals.record3month = '/pages/Demo/assets/img/Group 691314613 3.png'
+          this.medals.record3month =
+            '/pages/Demo/assets/img/Group 691314613 3.png'
         }
         if (days >= 180 && !status.record6month) {
           status.record6month = true
-          this.medals.record6month = '/pages/Demo/assets/img/Group 691314615 3.png'
+          this.medals.record6month =
+            '/pages/Demo/assets/img/Group 691314615 3.png'
         }
         if (days >= 365 && !status.record1year) {
           status.record1year = true
-          this.medals.record1year = '/pages/Demo/assets/img/Group 691314613 1.png'
+          this.medals.record1year =
+            '/pages/Demo/assets/img/Group 691314613 1.png'
         }
         if (days >= 730 && !status.record2year) {
           status.record2year = true
-          this.medals.record2year = '/pages/Demo/assets/img/Group 691314615 1.png'
+          this.medals.record2year =
+            '/pages/Demo/assets/img/Group 691314615 1.png'
         }
-        
+
         // 保存勋章状态
         storage.set({
           key: 'medal_status',
@@ -559,7 +563,7 @@ export default {
       }
     })
   },
-  
+
   // 首次设置勋章状态
   updateMedalsFirstTime() {
     const todaySteps = this.todaySteps
@@ -567,25 +571,70 @@ export default {
     const total = this.totalSteps
     const days = this.recordDays
     const dailyCheck = Math.max(todaySteps, maxDaily)
-    
+
     let status = {}
-    
-    if (dailyCheck >= 5000) { status.daily5000 = true; this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png' }
-    if (dailyCheck >= 10000) { status.daily10000 = true; this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png' }
-    if (dailyCheck >= 20000) { status.daily20000 = true; this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png' }
-    if (total >= 10000) { status.total10000 = true; this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png' }
-    if (total >= 20000) { status.total20000 = true; this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png' }
-    if (total >= 50000) { status.total50000 = true; this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png' }
-    if (total >= 100000) { status.total100000 = true; this.medals.total100000 = '/pages/Demo/assets/img/Group 691314613 2.png' }
-    if (total >= 200000) { status.total200000 = true; this.medals.total200000 = '/pages/Demo/assets/img/Group 691314615 2.png' }
-    if (days >= 1) { status.record1day = true; this.medals.record1day = '/pages/Demo/assets/img/5000 3.png' }
-    if (days >= 7) { status.record1week = true; this.medals.record1week = '/pages/Demo/assets/img/10000 3.png' }
-    if (days >= 30) { status.record1month = true; this.medals.record1month = '/pages/Demo/assets/img/20000 3.png' }
-    if (days >= 90) { status.record3month = true; this.medals.record3month = '/pages/Demo/assets/img/Group 691314613 3.png' }
-    if (days >= 180) { status.record6month = true; this.medals.record6month = '/pages/Demo/assets/img/Group 691314615 3.png' }
-    if (days >= 365) { status.record1year = true; this.medals.record1year = '/pages/Demo/assets/img/Group 691314613 1.png' }
-    if (days >= 730) { status.record2year = true; this.medals.record2year = '/pages/Demo/assets/img/Group 691314615 1.png' }
-    
+
+    if (dailyCheck >= 5000) {
+      status.daily5000 = true
+      this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
+    }
+    if (dailyCheck >= 10000) {
+      status.daily10000 = true
+      this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
+    }
+    if (dailyCheck >= 20000) {
+      status.daily20000 = true
+      this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
+    }
+    if (total >= 10000) {
+      status.total10000 = true
+      this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
+    }
+    if (total >= 20000) {
+      status.total20000 = true
+      this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
+    }
+    if (total >= 50000) {
+      status.total50000 = true
+      this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
+    }
+    if (total >= 100000) {
+      status.total100000 = true
+      this.medals.total100000 = '/pages/Demo/assets/img/Group 691314613 2.png'
+    }
+    if (total >= 200000) {
+      status.total200000 = true
+      this.medals.total200000 = '/pages/Demo/assets/img/Group 691314615 2.png'
+    }
+    if (days >= 1) {
+      status.record1day = true
+      this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
+    }
+    if (days >= 7) {
+      status.record1week = true
+      this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
+    }
+    if (days >= 30) {
+      status.record1month = true
+      this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
+    }
+    if (days >= 90) {
+      status.record3month = true
+      this.medals.record3month = '/pages/Demo/assets/img/Group 691314613 3.png'
+    }
+    if (days >= 180) {
+      status.record6month = true
+      this.medals.record6month = '/pages/Demo/assets/img/Group 691314615 3.png'
+    }
+    if (days >= 365) {
+      status.record1year = true
+      this.medals.record1year = '/pages/Demo/assets/img/Group 691314613 1.png'
+    }
+    if (days >= 730) {
+      status.record2year = true
+      this.medals.record2year = '/pages/Demo/assets/img/Group 691314615 1.png'
+    }
+
     storage.set({
       key: 'medal_status',
       value: JSON.stringify(status)
@@ -600,19 +649,15 @@ export default {
 .page-container {
   flex: 1;
   flex-direction: column;
+  width: 100%;
   background-image: url('/pages/Demo/assets/img/bg.png');
   background-size: 100% 100%;
   background-position: top center;
-}
-
-.scroll-container {
-  flex: 1;
-  flex-direction: column;
   padding: 12 * $size-factor;
 }
 
-.content-wrapper {
-  flex-direction: column;
+.bottom-spacer {
+  height: 70 * $size-factor;
   width: 100%;
 }
 
@@ -659,8 +704,7 @@ export default {
   color: #000000;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 20 * $size-factor;
-  height: 20 * $size-factor;
+  line-height: 28 * $size-factor;
 }
 
 .qiyun-text-img {
@@ -688,30 +732,31 @@ export default {
 }
 
 .date-day {
-  font-size: 32 * $size-factor;
+  font-size: 30 * $size-factor;
   font-weight: bold;
   color: #000000;
-  line-height: 40 * $size-factor;
+  line-height: 45 * $size-factor;
 }
 
 .date-label {
   font-size: 12 * $size-factor;
   color: #666666;
   text-align: right;
+  line-height: 22 * $size-factor;
 }
 
 /* 步数圆环 */
 .step-circle-wrap {
   align-items: center;
   justify-content: center;
-  height: 228 * $size-factor;
-  margin-top: 10 * $size-factor;
-  margin-bottom: 10 * $size-factor;
+  height: 282 * $size-factor;
+  margin-top: 5 * $size-factor;
+  margin-bottom: 5 * $size-factor;
 }
 
 .step-circle {
-  width: 140 * $size-factor;
-  height: 140 * $size-factor;
+  width: 128 * $size-factor;
+  height: 128 * $size-factor;
   border-radius: 70 * $size-factor;
   border-width: 8 * $size-factor;
   border-color: #9d6bf6;
@@ -727,16 +772,18 @@ export default {
 }
 
 .step-label {
-  font-size: 10 * $size-factor;
+  font-size: 12 * $size-factor;
   color: #000000;
+  margin-top: 6 * $size-factor;
   margin-bottom: 2 * $size-factor;
 }
 
 .step-count {
-  font-size: 40 * $size-factor;
+  font-size: 30 * $size-factor;
   font-weight: 900;
   color: #000000;
-  line-height: 48 * $size-factor;
+  line-height: 68 * $size-factor;
+  lines: 1;
 }
 
 .step-unit {
