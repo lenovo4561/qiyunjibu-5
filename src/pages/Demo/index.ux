@@ -1,0 +1,154 @@
+<!-- 
+  Copyright (c) 2021-present, the hapjs-platform Project Contributors
+  SPDX-License-Identifier: Apache-2.0
+-->
+
+<import name="privacy-modal" src="./PrivacyModal.ux"></import>
+<import name="shouye-tab" src="./tabs/Shouye.ux"></import>
+<import name="heshui-tab" src="./tabs/Heshui.ux"></import>
+<import name="zhoushuju-tab" src="./tabs/Zhoushuju.ux"></import>
+<import name="mine-tab" src="./tabs/Mine.ux"></import>
+
+<template>
+  <div class="wrapper">
+    <block if="{{hasAgreed}}">
+      <!-- 内容区域 -->
+      <div class="content-area">
+        <shouye-tab if="{{currentTab === 'shouye'}}"></shouye-tab>
+        <heshui-tab if="{{currentTab === 'heshui'}}"></heshui-tab>
+        <zhoushuju-tab if="{{currentTab === 'zhoushuju'}}"></zhoushuju-tab>
+        <mine-tab if="{{currentTab === 'mine'}}"></mine-tab>
+      </div>
+      
+      <!-- 底部导航栏 -->
+      <div class="bottom-nav">
+        <div class="nav-item" @click="switchTab('shouye')">
+          <image class="nav-icon" src="{{currentTab === 'shouye' ? '/pages/Demo/assets/img/bushu-s.png' : '/pages/Demo/assets/img/bushu-u.png'}}"></image>
+          <text class="nav-text {{currentTab === 'shouye' ? 'nav-text-active' : ''}}">首页</text>
+        </div>
+        <div class="nav-item" @click="switchTab('heshui')">
+          <image class="nav-icon" src="{{currentTab === 'heshui' ? '/pages/Demo/assets/img/heshui-s.png' : '/pages/Demo/assets/img/heshui-u.png'}}"></image>
+          <text class="nav-text {{currentTab === 'heshui' ? 'nav-text-active' : ''}}">喝水</text>
+        </div>
+        <div class="nav-item" @click="switchTab('zhoushuju')">
+          <image class="nav-icon" src="{{currentTab === 'zhoushuju' ? '/pages/Demo/assets/img/zhoushuju-s.png' : '/pages/Demo/assets/img/zhoushuju-u.png'}}"></image>
+          <text class="nav-text {{currentTab === 'zhoushuju' ? 'nav-text-active' : ''}}">周数据</text>
+        </div>
+        <div class="nav-item" @click="switchTab('mine')">
+          <image class="nav-icon" src="{{currentTab === 'mine' ? '/pages/Demo/assets/img/mine-s.png' : '/pages/Demo/assets/img/mine-u.png'}}"></image>
+          <text class="nav-text {{currentTab === 'mine' ? 'nav-text-active' : ''}}">我的</text>
+        </div>
+      </div>
+    </block>
+    <privacy-modal if="{{showPrivacyModal}}" @agree-evt="onAgree"></privacy-modal>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import storage from '@system.storage'
+import { initUser } from './helper/init'
+
+const PRIVACY_AGREED_KEY = 'privacy_agreed'
+
+export default {
+  private: {
+    showPrivacyModal: false,
+    hasAgreed: false,
+    currentTab: 'shouye'
+  },
+
+  onInit() {
+    initUser()
+    this.checkPrivacyAgreement()
+  },
+
+  checkPrivacyAgreement() {
+    storage.get({
+      key: PRIVACY_AGREED_KEY,
+      success: (data) => {
+        if (data === 'true') {
+          this.hasAgreed = true
+          this.showPrivacyModal = false
+        } else {
+          this.hasAgreed = false
+          this.showPrivacyModal = true
+        }
+      },
+      fail: () => {
+        this.hasAgreed = false
+        this.showPrivacyModal = true
+      }
+    })
+  },
+
+  onAgree() {
+    storage.set({
+      key: PRIVACY_AGREED_KEY,
+      value: 'true',
+      success: () => {
+        this.hasAgreed = true
+        this.showPrivacyModal = false
+      },
+      fail: (err) => {
+        console.error('Failed to save privacy agreement:', err)
+        this.hasAgreed = true
+        this.showPrivacyModal = false
+      }
+    })
+  },
+
+  switchTab(tab) {
+    this.currentTab = tab
+  }
+}
+</script>
+
+<style lang="scss">
+@import './assets/styles/style.scss';
+
+.wrapper {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.content-area {
+  flex: 1;
+  width: 100%;
+}
+
+.bottom-nav {
+  width: 100%;
+  height: 56 * $size-factor;
+  background-color: #ffffff;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-top-width: 1px;
+  border-top-color: #e0e0e0;
+}
+
+.nav-item {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.nav-icon {
+  width: 24 * $size-factor;
+  height: 24 * $size-factor;
+}
+
+.nav-text {
+  font-size: 10 * $size-factor;
+  color: #999999;
+  margin-top: 2 * $size-factor;
+}
+
+.nav-text-active {
+  color: #7c4dff;
+}
+</style>

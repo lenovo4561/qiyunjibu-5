@@ -1,0 +1,144 @@
+<template>
+  <div class="page-container">
+    <!-- 顶部用户信息 -->
+    <div class="user-header">
+      <image class="user-avatar" src="/pages/Demo/assets/img/logo.png"></image>
+      <text class="user-name">李琳颖</text>
+    </div>
+
+    <!-- 其他服务 -->
+    <div class="services-section">
+      <text class="section-title">其他服务</text>
+      
+      <div class="service-card">
+        <!-- 用户协议 -->
+        <div class="service-item" @click="openAgreement">
+          <div class="item-left">
+            <image class="item-icon" src="/pages/Demo/assets/img/yonghuxieyi.png"></image>
+            <text class="item-text">用户协议</text>
+          </div>
+          <image class="arrow-icon" src="/pages/Demo/assets/img/jiantou.png"></image>
+        </div>
+
+        <!-- 隐私政策 -->
+        <div class="service-item" @click="openPrivacy">
+          <div class="item-left">
+            <image class="item-icon" src="/pages/Demo/assets/img/yinsizhengce-1.png"></image>
+            <text class="item-text">隐私政策</text>
+          </div>
+          <image class="arrow-icon" src="/pages/Demo/assets/img/jiantou.png"></image>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data: {},
+  openAgreement() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.qiyunjbcl.walkcloudqy',
+        title: '用户协议'
+      }
+    })
+  },
+  openPrivacy() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.qiyunjbcl.walkcloudqy',
+        title: '隐私政策'
+      }
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  background-image: url('/pages/Demo/assets/img/loading-bg.png');
+  background-size: cover;
+  padding: 20 * $size-factor;
+}
+
+.user-header {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 40 * $size-factor;
+  margin-bottom: 40 * $size-factor;
+}
+
+.user-avatar {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  border-radius: 30 * $size-factor;
+  margin-right: 16 * $size-factor;
+  border: 2px solid #ffffff;
+}
+
+.user-name {
+  font-size: 18 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+}
+
+.services-section {
+  flex-direction: column;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 14 * $size-factor;
+  color: #000000;
+  margin-bottom: 12 * $size-factor;
+  margin-left: 4 * $size-factor;
+}
+
+.service-card {
+  background-color: #ffffff;
+  border-radius: 16 * $size-factor;
+  flex-direction: column;
+  padding-left: 16 * $size-factor;
+  padding-right: 16 * $size-factor;
+}
+
+.service-item {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 56 * $size-factor;
+  border-bottom-width: 1px;
+  border-bottom-color: #f0f0f0;
+}
+
+.item-left {
+  flex-direction: row;
+  align-items: center;
+}
+
+.item-icon {
+  width: 24 * $size-factor;
+  height: 24 * $size-factor;
+  margin-right: 12 * $size-factor;
+  object-fit: contain;
+}
+
+.item-text {
+  font-size: 14 * $size-factor;
+  color: #000000;
+}
+
+.arrow-icon {
+  width: 32 * $size-factor;
+  height: 32 * $size-factor;
+  object-fit: contain;
+}
+</style>
