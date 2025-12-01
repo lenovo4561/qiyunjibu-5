@@ -58,36 +58,50 @@ export function initUser() {
         }
       })
     })
-  ]).then(results => {
-    const oaid = results[0]
-    const androidId = results[1]
-    const deviceInfo = results[2]
-    const appInfo = app.getInfo()
+  ])
+    .then(results => {
+      try {
+        const oaid = results[0]
+        const androidId = results[1]
+        const deviceInfo = results[2]
 
-    const params = {
-      oaid: oaid,
-      android: androidId,
-      model: deviceInfo.model || '',
-      brand: deviceInfo.brand || '',
-      pn: appInfo.packageName || '',
-      app_version: appInfo.versionName || '',
-      os_version: deviceInfo.osVersionName || '',
-      qudao: 'vivo'
-    }
-
-    $apis.user
-      .init(params)
-      .then(data => {
-        console.info('User init success:', data)
-        if (data && data.user_token) {
-          storage.set({
-            key: 'user_token',
-            value: data.user_token
-          })
+        let appInfo = {}
+        try {
+          appInfo = app.getInfo() || {}
+        } catch (e) {
+          console.error('get app info failed:', e)
         }
-      })
-      .catch(err => {
-        console.error('User init failed:', err)
-      })
-  })
+
+        const params = {
+          oaid: oaid || '',
+          android: androidId || '',
+          model: deviceInfo.model || '',
+          brand: deviceInfo.brand || '',
+          pn: appInfo.packageName || '',
+          app_version: appInfo.versionName || '',
+          os_version: deviceInfo.osVersionName || '',
+          qudao: 'vivo'
+        }
+
+        $apis.user
+          .init(params)
+          .then(data => {
+            console.info('User init success:', data)
+            if (data && data.user_token) {
+              storage.set({
+                key: 'user_token',
+                value: data.user_token
+              })
+            }
+          })
+          .catch(err => {
+            console.error('User init failed:', err)
+          })
+      } catch (e) {
+        console.error('initUser error:', e)
+      }
+    })
+    .catch(err => {
+      console.error('Promise.all failed:', err)
+    })
 }

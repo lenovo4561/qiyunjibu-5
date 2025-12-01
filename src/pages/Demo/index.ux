@@ -52,32 +52,36 @@ import { initUser } from './helper/init'
 const PRIVACY_AGREED_KEY = 'privacy_agreed'
 
 export default {
-  private: {
-    showPrivacyModal: false,
+  data: {
+    showPrivacyModal: true,
     hasAgreed: false,
     currentTab: 'shouye'
   },
 
   onInit() {
-    initUser()
     this.checkPrivacyAgreement()
+    // 异步初始化用户，不阻塞页面加载
+    setTimeout(() => {
+      initUser()
+    }, 100)
   },
 
   checkPrivacyAgreement() {
+    const self = this
     storage.get({
       key: PRIVACY_AGREED_KEY,
-      success: (data) => {
+      success: function(data) {
         if (data === 'true') {
-          this.hasAgreed = true
-          this.showPrivacyModal = false
+          self.hasAgreed = true
+          self.showPrivacyModal = false
         } else {
-          this.hasAgreed = false
-          this.showPrivacyModal = true
+          self.hasAgreed = false
+          self.showPrivacyModal = true
         }
       },
-      fail: () => {
-        this.hasAgreed = false
-        this.showPrivacyModal = true
+      fail: function() {
+        self.hasAgreed = false
+        self.showPrivacyModal = true
       }
     })
   },
