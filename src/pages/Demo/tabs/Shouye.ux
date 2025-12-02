@@ -69,76 +69,10 @@
     <list-item type="medal-card" class="list-item-card">
       <div class="sy-medal-card">
         <text class="sy-medal-title">勋章墙</text>
-
-        <!-- 第一行：单日步数 + 累计步数前两个 -->
-        <div class="sy-medal-row">
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.daily5000}}"></image>
-            <text class="sy-medal-label">单日5000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.daily10000}}"></image>
-            <text class="sy-medal-label">单日10000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.daily20000}}"></image>
-            <text class="sy-medal-label">单日20000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.total10000}}"></image>
-            <text class="sy-medal-label">累计10000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.total20000}}"></image>
-            <text class="sy-medal-label">累计20000步</text>
-          </div>
-        </div>
-
-        <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
-        <div class="sy-medal-row">
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.total50000}}"></image>
-            <text class="sy-medal-label">累计50000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.total100000}}"></image>
-            <text class="sy-medal-label">累计100000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.total200000}}"></image>
-            <text class="sy-medal-label">累计200000步</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record1day}}"></image>
-            <text class="sy-medal-label">坚持记录1天</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record1week}}"></image>
-            <text class="sy-medal-label">坚持记录1周</text>
-          </div>
-        </div>
-
-        <!-- 第三行：坚持记录后五个 -->
-        <div class="sy-medal-row">
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record1month}}"></image>
-            <text class="sy-medal-label">坚持记录1月</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record3month}}"></image>
-            <text class="sy-medal-label">坚持记录3月</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record6month}}"></image>
-            <text class="sy-medal-label">坚持记录6月</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record1year}}"></image>
-            <text class="sy-medal-label">坚持记录1年</text>
-          </div>
-          <div class="sy-medal-item">
-            <image class="sy-medal-icon" src="{{medals.record2year}}"></image>
-            <text class="sy-medal-label">坚持记录2年</text>
+        <div class="sy-medal-row" for="{{(rowIndex, row) in medalRows}}">
+          <div class="sy-medal-item" for="{{(colIndex, medal) in row}}">
+            <image class="sy-medal-icon" src="{{medalStatus[medal.key] ? medal.iconLit : medal.icon}}"></image>
+            <text class="sy-medal-label">{{medal.label}}</text>
           </div>
         </div>
       </div>
@@ -216,24 +150,35 @@ export default {
     totalSteps: 0,
     recordDays: 0,
     maxDailySteps: 0,
-    // 勋章图标路径
-    medals: {
-      daily5000: '/pages/Demo/assets/img/5000 1-1.png',
-      daily10000: '/pages/Demo/assets/img/10000 1-1.png',
-      daily20000: '/pages/Demo/assets/img/20000 1-1.png',
-      total10000: '/pages/Demo/assets/img/5000 2-1.png',
-      total20000: '/pages/Demo/assets/img/10000 2-1.png',
-      total50000: '/pages/Demo/assets/img/20000 2-1.png',
-      total100000: '/pages/Demo/assets/img/Group 691314613 2-1.png',
-      total200000: '/pages/Demo/assets/img/Group 691314615 2-1.png',
-      record1day: '/pages/Demo/assets/img/5000 3-1.png',
-      record1week: '/pages/Demo/assets/img/10000 3-1.png',
-      record1month: '/pages/Demo/assets/img/20000 3-1.png',
-      record3month: '/pages/Demo/assets/img/Group 691314613 3-1.png',
-      record6month: '/pages/Demo/assets/img/Group 691314615 3-1.png',
-      record1year: '/pages/Demo/assets/img/Group 691314613 1-1.png',
-      record2year: '/pages/Demo/assets/img/Group 691314615 1-1.png'
-    }
+    // 勋章数据：三行，每行5个
+    medalRows: [
+      // 第一行：单日步数3个 + 累计步数2个
+      [
+        { key: 'daily5000', label: '单日5000步', icon: '/pages/Demo/assets/img/5000 1-1.png', iconLit: '/pages/Demo/assets/img/5000 1.png' },
+        { key: 'daily10000', label: '单日10000步', icon: '/pages/Demo/assets/img/10000 1-1.png', iconLit: '/pages/Demo/assets/img/10000 1.png' },
+        { key: 'daily20000', label: '单日20000步', icon: '/pages/Demo/assets/img/20000 1-1.png', iconLit: '/pages/Demo/assets/img/20000 1.png' },
+        { key: 'total10000', label: '累计10000步', icon: '/pages/Demo/assets/img/10000 2-1.png', iconLit: '/pages/Demo/assets/img/10000 2.png' },
+        { key: 'total20000', label: '累计20000步', icon: '/pages/Demo/assets/img/20000 2-1.png', iconLit: '/pages/Demo/assets/img/20000 2.png' }
+      ],
+      // 第二行：累计步数3个 + 坚持记录2个
+      [
+        { key: 'total50000', label: '累计50000步', icon: '/pages/Demo/assets/img/5000 2-1.png', iconLit: '/pages/Demo/assets/img/5000 2.png' },
+        { key: 'total100000', label: '累计100000步', icon: '/pages/Demo/assets/img/10000 2-1.png', iconLit: '/pages/Demo/assets/img/10000 2.png' },
+        { key: 'total200000', label: '累计200000步', icon: '/pages/Demo/assets/img/20000 2-1.png', iconLit: '/pages/Demo/assets/img/20000 2.png' },
+        { key: 'record1day', label: '坚持记录1天', icon: '/pages/Demo/assets/img/Group 691314613 2-1.png', iconLit: '/pages/Demo/assets/img/Group 691314613 2.png' },
+        { key: 'record1week', label: '坚持记录1周', icon: '/pages/Demo/assets/img/Group 691314615 2-1.png', iconLit: '/pages/Demo/assets/img/Group 691314615 2.png' }
+      ],
+      // 第三行：坚持记录5个
+      [
+        { key: 'record1month', label: '坚持记录1月', icon: '/pages/Demo/assets/img/5000 3-1.png', iconLit: '/pages/Demo/assets/img/5000 3.png' },
+        { key: 'record3month', label: '坚持记录3月', icon: '/pages/Demo/assets/img/10000 3-1.png', iconLit: '/pages/Demo/assets/img/10000 3.png' },
+        { key: 'record6month', label: '坚持记录6月', icon: '/pages/Demo/assets/img/20000 3-1.png', iconLit: '/pages/Demo/assets/img/20000 3.png' },
+        { key: 'record1year', label: '坚持记录1年', icon: '/pages/Demo/assets/img/Group 691314613 3-1.png', iconLit: '/pages/Demo/assets/img/Group 691314613 3.png' },
+        { key: 'record2year', label: '坚持记录2年', icon: '/pages/Demo/assets/img/Group 691314615 3-1.png', iconLit: '/pages/Demo/assets/img/Group 691314615 3.png' }
+      ]
+    ],
+    // 勋章点亮状态
+    medalStatus: {}
   },
   onInit() {
     const now = new Date()
@@ -432,222 +377,77 @@ export default {
       key: 'medal_status',
       success: data => {
         if (data) {
-          const status = JSON.parse(data)
-          // 根据已保存的点亮状态更新勋章图标
-          if (status.daily5000)
-            this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
-          if (status.daily10000)
-            this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
-          if (status.daily20000)
-            this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
-          if (status.total10000)
-            this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
-          if (status.total20000)
-            this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
-          if (status.total50000)
-            this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
-          if (status.total100000)
-            this.medals.total100000 =
-              '/pages/Demo/assets/img/Group 691314613 2.png'
-          if (status.total200000)
-            this.medals.total200000 =
-              '/pages/Demo/assets/img/Group 691314615 2.png'
-          if (status.record1day)
-            this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
-          if (status.record1week)
-            this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
-          if (status.record1month)
-            this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
-          if (status.record3month)
-            this.medals.record3month =
-              '/pages/Demo/assets/img/Group 691314613 3.png'
-          if (status.record6month)
-            this.medals.record6month =
-              '/pages/Demo/assets/img/Group 691314615 3.png'
-          if (status.record1year)
-            this.medals.record1year =
-              '/pages/Demo/assets/img/Group 691314613 1.png'
-          if (status.record2year)
-            this.medals.record2year =
-              '/pages/Demo/assets/img/Group 691314615 1.png'
+          this.medalStatus = JSON.parse(data)
         }
       }
     })
+  },
+
+  // 勋章解锁条件配置
+  getMedalConditions() {
+    return {
+      daily5000: { type: 'daily', threshold: 5000 },
+      daily10000: { type: 'daily', threshold: 10000 },
+      daily20000: { type: 'daily', threshold: 20000 },
+      total10000: { type: 'total', threshold: 10000 },
+      total20000: { type: 'total', threshold: 20000 },
+      total50000: { type: 'total', threshold: 50000 },
+      total100000: { type: 'total', threshold: 100000 },
+      total200000: { type: 'total', threshold: 200000 },
+      record1day: { type: 'days', threshold: 1 },
+      record1week: { type: 'days', threshold: 7 },
+      record1month: { type: 'days', threshold: 30 },
+      record3month: { type: 'days', threshold: 90 },
+      record6month: { type: 'days', threshold: 180 },
+      record1year: { type: 'days', threshold: 365 },
+      record2year: { type: 'days', threshold: 730 }
+    }
   },
 
   // 更新勋章状态（只点亮，不熄灭）
   updateMedals() {
-    const todaySteps = this.todaySteps
-    const maxDaily = this.maxDailySteps
+    const dailyCheck = Math.max(this.todaySteps, this.maxDailySteps)
     const total = this.totalSteps
     const days = this.recordDays
+    const conditions = this.getMedalConditions()
 
-    // 先加载已有的勋章状态
     storage.get({
       key: 'medal_status',
       success: data => {
         let status = data ? JSON.parse(data) : {}
+        let changed = false
 
-        // 单日步数勋章（只点亮，不熄灭）
-        const dailyCheck = Math.max(todaySteps, maxDaily)
-        if (dailyCheck >= 5000 && !status.daily5000) {
-          status.daily5000 = true
-          this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
-        }
-        if (dailyCheck >= 10000 && !status.daily10000) {
-          status.daily10000 = true
-          this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
-        }
-        if (dailyCheck >= 20000 && !status.daily20000) {
-          status.daily20000 = true
-          this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
-        }
+        Object.keys(conditions).forEach(key => {
+          if (status[key]) return // 已点亮，跳过
 
-        // 累计步数勋章
-        if (total >= 10000 && !status.total10000) {
-          status.total10000 = true
-          this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
-        }
-        if (total >= 20000 && !status.total20000) {
-          status.total20000 = true
-          this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
-        }
-        if (total >= 50000 && !status.total50000) {
-          status.total50000 = true
-          this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
-        }
-        if (total >= 100000 && !status.total100000) {
-          status.total100000 = true
-          this.medals.total100000 =
-            '/pages/Demo/assets/img/Group 691314613 2.png'
-        }
-        if (total >= 200000 && !status.total200000) {
-          status.total200000 = true
-          this.medals.total200000 =
-            '/pages/Demo/assets/img/Group 691314615 2.png'
-        }
+          const cond = conditions[key]
+          let unlocked = false
 
-        // 坚持记录勋章
-        if (days >= 1 && !status.record1day) {
-          status.record1day = true
-          this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
-        }
-        if (days >= 7 && !status.record1week) {
-          status.record1week = true
-          this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
-        }
-        if (days >= 30 && !status.record1month) {
-          status.record1month = true
-          this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
-        }
-        if (days >= 90 && !status.record3month) {
-          status.record3month = true
-          this.medals.record3month =
-            '/pages/Demo/assets/img/Group 691314613 3.png'
-        }
-        if (days >= 180 && !status.record6month) {
-          status.record6month = true
-          this.medals.record6month =
-            '/pages/Demo/assets/img/Group 691314615 3.png'
-        }
-        if (days >= 365 && !status.record1year) {
-          status.record1year = true
-          this.medals.record1year =
-            '/pages/Demo/assets/img/Group 691314613 1.png'
-        }
-        if (days >= 730 && !status.record2year) {
-          status.record2year = true
-          this.medals.record2year =
-            '/pages/Demo/assets/img/Group 691314615 1.png'
-        }
+          if (cond.type === 'daily') {
+            unlocked = dailyCheck >= cond.threshold
+          } else if (cond.type === 'total') {
+            unlocked = total >= cond.threshold
+          } else if (cond.type === 'days') {
+            unlocked = days >= cond.threshold
+          }
 
-        // 保存勋章状态
-        storage.set({
-          key: 'medal_status',
-          value: JSON.stringify(status)
+          if (unlocked) {
+            status[key] = true
+            changed = true
+          }
         })
+
+        if (changed) {
+          storage.set({
+            key: 'medal_status',
+            value: JSON.stringify(status)
+          })
+        }
+        this.medalStatus = status
       },
       fail: () => {
-        // 首次设置勋章状态
-        this.updateMedalsFirstTime()
+        this.medalStatus = {}
       }
-    })
-  },
-
-  // 首次设置勋章状态
-  updateMedalsFirstTime() {
-    const todaySteps = this.todaySteps
-    const maxDaily = this.maxDailySteps
-    const total = this.totalSteps
-    const days = this.recordDays
-    const dailyCheck = Math.max(todaySteps, maxDaily)
-
-    let status = {}
-
-    if (dailyCheck >= 5000) {
-      status.daily5000 = true
-      this.medals.daily5000 = '/pages/Demo/assets/img/5000 1.png'
-    }
-    if (dailyCheck >= 10000) {
-      status.daily10000 = true
-      this.medals.daily10000 = '/pages/Demo/assets/img/10000 1.png'
-    }
-    if (dailyCheck >= 20000) {
-      status.daily20000 = true
-      this.medals.daily20000 = '/pages/Demo/assets/img/20000 1.png'
-    }
-    if (total >= 10000) {
-      status.total10000 = true
-      this.medals.total10000 = '/pages/Demo/assets/img/5000 2.png'
-    }
-    if (total >= 20000) {
-      status.total20000 = true
-      this.medals.total20000 = '/pages/Demo/assets/img/10000 2.png'
-    }
-    if (total >= 50000) {
-      status.total50000 = true
-      this.medals.total50000 = '/pages/Demo/assets/img/20000 2.png'
-    }
-    if (total >= 100000) {
-      status.total100000 = true
-      this.medals.total100000 = '/pages/Demo/assets/img/Group 691314613 2.png'
-    }
-    if (total >= 200000) {
-      status.total200000 = true
-      this.medals.total200000 = '/pages/Demo/assets/img/Group 691314615 2.png'
-    }
-    if (days >= 1) {
-      status.record1day = true
-      this.medals.record1day = '/pages/Demo/assets/img/5000 3.png'
-    }
-    if (days >= 7) {
-      status.record1week = true
-      this.medals.record1week = '/pages/Demo/assets/img/10000 3.png'
-    }
-    if (days >= 30) {
-      status.record1month = true
-      this.medals.record1month = '/pages/Demo/assets/img/20000 3.png'
-    }
-    if (days >= 90) {
-      status.record3month = true
-      this.medals.record3month = '/pages/Demo/assets/img/Group 691314613 3.png'
-    }
-    if (days >= 180) {
-      status.record6month = true
-      this.medals.record6month = '/pages/Demo/assets/img/Group 691314615 3.png'
-    }
-    if (days >= 365) {
-      status.record1year = true
-      this.medals.record1year = '/pages/Demo/assets/img/Group 691314613 1.png'
-    }
-    if (days >= 730) {
-      status.record2year = true
-      this.medals.record2year = '/pages/Demo/assets/img/Group 691314615 1.png'
-    }
-
-    storage.set({
-      key: 'medal_status',
-      value: JSON.stringify(status)
     })
   }
 }
