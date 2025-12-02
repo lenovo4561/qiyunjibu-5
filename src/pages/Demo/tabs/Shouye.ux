@@ -1,156 +1,156 @@
 <template>
   <div class="shouye-container">
     <list class="content-list">
-      <!-- 今日运动步数卡片 -->
-      <list-item type="step-card" class="list-item-card">
-        <div class="sy-step-card">
-      <div class="sy-step-card-header">
-        <div class="sy-step-text-group">
-          <div class="sy-today-row">
-            <text class="sy-step-title-big">今日</text>
+    <!-- 今日运动步数卡片 -->
+    <list-item type="step-card" class="list-item-card">
+      <div class="sy-step-card">
+        <div class="sy-step-card-header">
+          <div class="sy-step-text-group">
+            <div class="sy-today-row">
+              <text class="sy-step-title-big">今日</text>
+              <image
+                class="sy-eye-icon-big"
+                src="/pages/Demo/assets/img/yanjing.png"
+              ></image>
+            </div>
+            <text class="sy-step-subtitle-big">运动步数</text>
+          </div>
+          <div class="sy-date-wrap">
+            <text class="sy-date-month">{{ currentMonth }}月</text>
+            <text class="sy-date-day">{{ currentDay }}</text>
+            <text class="sy-date-label">今日</text>
+          </div>
+        </div>
+
+        <!-- 步数圆环 -->
+        <div class="sy-step-circle-wrap">
+          <div class="sy-step-circle">
+            <div class="sy-step-circle-inner">
+              <text class="sy-step-label">今日步数</text>
+              <text class="sy-step-count">{{ todaySteps }}</text>
+              <text class="sy-step-unit">步</text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </list-item>
+
+    <!-- 今日数据卡片 -->
+    <list-item type="data-card" class="list-item-card">
+      <div class="sy-data-card">
+        <div class="sy-data-card-header">
+          <text class="sy-data-title">今日数据</text>
+          <div class="sy-edit-btn" @click="openEditModal">
+            <text class="sy-edit-text">编辑</text>
             <image
-              class="sy-eye-icon-big"
-              src="/pages/Demo/assets/img/yanjing.png"
+              class="sy-eye-icon-small"
+              src="/pages/Demo/assets/img/yanjing2.png"
             ></image>
           </div>
-          <text class="sy-step-subtitle-big">运动步数</text>
         </div>
-        <div class="sy-date-wrap">
-          <text class="sy-date-month">{{ currentMonth }}月</text>
-          <text class="sy-date-day">{{ currentDay }}</text>
-          <text class="sy-date-label">今日</text>
-        </div>
-      </div>
-
-      <!-- 步数圆环 -->
-      <div class="sy-step-circle-wrap">
-        <div class="sy-step-circle">
-          <div class="sy-step-circle-inner">
-            <text class="sy-step-label">今日步数</text>
-            <text class="sy-step-count">{{ todaySteps }}</text>
-            <text class="sy-step-unit">步</text>
+        <div class="sy-data-stats">
+          <div class="sy-stat-item">
+            <text class="sy-stat-value">{{ distance }}</text>
+            <text class="sy-stat-label">运动距离(km)</text>
+          </div>
+          <div class="sy-stat-item">
+            <text class="sy-stat-value">{{ duration }}</text>
+            <text class="sy-stat-label">运动时长(min)</text>
+          </div>
+          <div class="sy-stat-item">
+            <text class="sy-stat-value">{{ calories }}</text>
+            <text class="sy-stat-label">热量消耗(kcal)</text>
           </div>
         </div>
       </div>
-        </div>
-      </list-item>
+    </list-item>
 
-      <!-- 今日数据卡片 -->
-      <list-item type="data-card" class="list-item-card">
-        <div class="sy-data-card">
-      <div class="sy-data-card-header">
-        <text class="sy-data-title">今日数据</text>
-        <div class="sy-edit-btn" @click="openEditModal">
-          <text class="sy-edit-text">编辑</text>
-          <image
-            class="sy-eye-icon-small"
-            src="/pages/Demo/assets/img/yanjing2.png"
-          ></image>
+    <!-- 勋章墙卡片 -->
+    <list-item type="medal-card" class="list-item-card">
+      <div class="sy-medal-card">
+        <text class="sy-medal-title">勋章墙</text>
+
+        <!-- 第一行：单日步数 + 累计步数前两个 -->
+        <div class="sy-medal-row">
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.daily5000}}"></image>
+            <text class="sy-medal-label">单日5000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.daily10000}}"></image>
+            <text class="sy-medal-label">单日10000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.daily20000}}"></image>
+            <text class="sy-medal-label">单日20000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.total10000}}"></image>
+            <text class="sy-medal-label">累计10000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.total20000}}"></image>
+            <text class="sy-medal-label">累计20000步</text>
+          </div>
+        </div>
+
+        <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
+        <div class="sy-medal-row">
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.total50000}}"></image>
+            <text class="sy-medal-label">累计50000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.total100000}}"></image>
+            <text class="sy-medal-label">累计100000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.total200000}}"></image>
+            <text class="sy-medal-label">累计200000步</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record1day}}"></image>
+            <text class="sy-medal-label">坚持记录1天</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record1week}}"></image>
+            <text class="sy-medal-label">坚持记录1周</text>
+          </div>
+        </div>
+
+        <!-- 第三行：坚持记录后五个 -->
+        <div class="sy-medal-row">
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record1month}}"></image>
+            <text class="sy-medal-label">坚持记录1月</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record3month}}"></image>
+            <text class="sy-medal-label">坚持记录3月</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record6month}}"></image>
+            <text class="sy-medal-label">坚持记录6月</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record1year}}"></image>
+            <text class="sy-medal-label">坚持记录1年</text>
+          </div>
+          <div class="sy-medal-item">
+            <image class="sy-medal-icon" src="{{medals.record2year}}"></image>
+            <text class="sy-medal-label">坚持记录2年</text>
+          </div>
         </div>
       </div>
-      <div class="sy-data-stats">
-        <div class="sy-stat-item">
-          <text class="sy-stat-value">{{ distance }}</text>
-          <text class="sy-stat-label">运动距离(km)</text>
-        </div>
-        <div class="sy-stat-item">
-          <text class="sy-stat-value">{{ duration }}</text>
-          <text class="sy-stat-label">运动时长(min)</text>
-        </div>
-        <div class="sy-stat-item">
-          <text class="sy-stat-value">{{ calories }}</text>
-          <text class="sy-stat-label">热量消耗(kcal)</text>
-        </div>
-      </div>
-        </div>
-      </list-item>
+    </list-item>
 
-      <!-- 勋章墙卡片 -->
-      <list-item type="medal-card" class="list-item-card">
-        <div class="sy-medal-card">
-      <text class="sy-medal-title">勋章墙</text>
+    <!-- 底部留白 -->
+    <list-item type="spacer" class="list-item-spacer">
+      <div class="sy-bottom-spacer"></div>
+    </list-item>
+  </list>
 
-      <!-- 第一行：单日步数 + 累计步数前两个 -->
-      <div class="sy-medal-row">
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.daily5000}}"></image>
-          <text class="sy-medal-label">单日5000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.daily10000}}"></image>
-          <text class="sy-medal-label">单日10000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.daily20000}}"></image>
-          <text class="sy-medal-label">单日20000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.total10000}}"></image>
-          <text class="sy-medal-label">累计10000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.total20000}}"></image>
-          <text class="sy-medal-label">累计20000步</text>
-        </div>
-      </div>
-
-      <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
-      <div class="sy-medal-row">
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.total50000}}"></image>
-          <text class="sy-medal-label">累计50000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.total100000}}"></image>
-          <text class="sy-medal-label">累计100000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.total200000}}"></image>
-          <text class="sy-medal-label">累计200000步</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record1day}}"></image>
-          <text class="sy-medal-label">坚持记录1天</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record1week}}"></image>
-          <text class="sy-medal-label">坚持记录1周</text>
-        </div>
-      </div>
-
-      <!-- 第三行：坚持记录后五个 -->
-      <div class="sy-medal-row">
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record1month}}"></image>
-          <text class="sy-medal-label">坚持记录1月</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record3month}}"></image>
-          <text class="sy-medal-label">坚持记录3月</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record6month}}"></image>
-          <text class="sy-medal-label">坚持记录6月</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record1year}}"></image>
-          <text class="sy-medal-label">坚持记录1年</text>
-        </div>
-        <div class="sy-medal-item">
-          <image class="sy-medal-icon" src="{{medals.record2year}}"></image>
-          <text class="sy-medal-label">坚持记录2年</text>
-        </div>
-      </div>
-        </div>
-      </list-item>
-
-      <!-- 底部留白 -->
-      <list-item type="spacer" class="list-item-spacer">
-        <div class="sy-bottom-spacer"></div>
-      </list-item>
-    </list>
-
-    <!-- 编辑数据弹窗 -->
+  <!-- 编辑数据弹窗 -->
     <div class="edit-modal" if="{{showEditModal}}">
       <div class="edit-modal-content">
         <div class="edit-modal-header">
@@ -695,6 +695,7 @@ export default {
   border: 2px solid #000000;
   height: 250 * $size-factor;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .sy-step-card-header {
@@ -829,6 +830,7 @@ export default {
   flex-direction: column;
   border: 2px solid #000000;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .sy-data-card-header {
