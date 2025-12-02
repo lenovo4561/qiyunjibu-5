@@ -1,144 +1,154 @@
 <template>
-  <div class="page-container">
-    <!-- 今日运动步数卡片 -->
-    <div class="step-card">
-      <div class="step-card-header">
-        <div class="step-text-group">
-          <div class="today-row">
-            <text class="step-title-big">今日</text>
+  <div class="shouye-container">
+    <list class="content-list">
+      <!-- 今日运动步数卡片 -->
+      <list-item type="step-card" class="list-item-card">
+        <div class="sy-step-card">
+      <div class="sy-step-card-header">
+        <div class="sy-step-text-group">
+          <div class="sy-today-row">
+            <text class="sy-step-title-big">今日</text>
             <image
-              class="eye-icon-big"
+              class="sy-eye-icon-big"
               src="/pages/Demo/assets/img/yanjing.png"
             ></image>
           </div>
-          <text class="step-subtitle-big">运动步数</text>
+          <text class="sy-step-subtitle-big">运动步数</text>
         </div>
-        <div class="date-wrap">
-          <text class="date-month">{{ currentMonth }}月</text>
-          <text class="date-day">{{ currentDay }}</text>
-          <text class="date-label">今日</text>
+        <div class="sy-date-wrap">
+          <text class="sy-date-month">{{ currentMonth }}月</text>
+          <text class="sy-date-day">{{ currentDay }}</text>
+          <text class="sy-date-label">今日</text>
         </div>
       </div>
 
       <!-- 步数圆环 -->
-      <div class="step-circle-wrap">
-        <div class="step-circle">
-          <div class="step-circle-inner">
-            <text class="step-label">今日步数</text>
-            <text class="step-count">{{ todaySteps }}</text>
-            <text class="step-unit">步</text>
+      <div class="sy-step-circle-wrap">
+        <div class="sy-step-circle">
+          <div class="sy-step-circle-inner">
+            <text class="sy-step-label">今日步数</text>
+            <text class="sy-step-count">{{ todaySteps }}</text>
+            <text class="sy-step-unit">步</text>
           </div>
         </div>
       </div>
-    </div>
+        </div>
+      </list-item>
 
-    <!-- 今日数据卡片 -->
-    <div class="data-card">
-      <div class="data-card-header">
-        <text class="data-title">今日数据</text>
-        <div class="edit-btn" @click="openEditModal">
-          <text class="edit-text">编辑</text>
+      <!-- 今日数据卡片 -->
+      <list-item type="data-card" class="list-item-card">
+        <div class="sy-data-card">
+      <div class="sy-data-card-header">
+        <text class="sy-data-title">今日数据</text>
+        <div class="sy-edit-btn" @click="openEditModal">
+          <text class="sy-edit-text">编辑</text>
           <image
-            class="eye-icon-small"
+            class="sy-eye-icon-small"
             src="/pages/Demo/assets/img/yanjing2.png"
           ></image>
         </div>
       </div>
-      <div class="data-stats">
-        <div class="stat-item">
-          <text class="stat-value">{{ distance }}</text>
-          <text class="stat-label">运动距离(km)</text>
+      <div class="sy-data-stats">
+        <div class="sy-stat-item">
+          <text class="sy-stat-value">{{ distance }}</text>
+          <text class="sy-stat-label">运动距离(km)</text>
         </div>
-        <div class="stat-item">
-          <text class="stat-value">{{ duration }}</text>
-          <text class="stat-label">运动时长(min)</text>
+        <div class="sy-stat-item">
+          <text class="sy-stat-value">{{ duration }}</text>
+          <text class="sy-stat-label">运动时长(min)</text>
         </div>
-        <div class="stat-item">
-          <text class="stat-value">{{ calories }}</text>
-          <text class="stat-label">热量消耗(kcal)</text>
+        <div class="sy-stat-item">
+          <text class="sy-stat-value">{{ calories }}</text>
+          <text class="sy-stat-label">热量消耗(kcal)</text>
         </div>
       </div>
-    </div>
+        </div>
+      </list-item>
 
-    <!-- 勋章墙卡片 -->
-    <div class="medal-card">
-      <text class="medal-title">勋章墙</text>
+      <!-- 勋章墙卡片 -->
+      <list-item type="medal-card" class="list-item-card">
+        <div class="sy-medal-card">
+      <text class="sy-medal-title">勋章墙</text>
 
       <!-- 第一行：单日步数 + 累计步数前两个 -->
-      <div class="medal-row">
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.daily5000}}"></image>
-          <text class="medal-label">单日5000步</text>
+      <div class="sy-medal-row">
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.daily5000}}"></image>
+          <text class="sy-medal-label">单日5000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.daily10000}}"></image>
-          <text class="medal-label">单日10000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.daily10000}}"></image>
+          <text class="sy-medal-label">单日10000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.daily20000}}"></image>
-          <text class="medal-label">单日20000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.daily20000}}"></image>
+          <text class="sy-medal-label">单日20000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.total10000}}"></image>
-          <text class="medal-label">累计10000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.total10000}}"></image>
+          <text class="sy-medal-label">累计10000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.total20000}}"></image>
-          <text class="medal-label">累计20000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.total20000}}"></image>
+          <text class="sy-medal-label">累计20000步</text>
         </div>
       </div>
 
       <!-- 第二行：累计步数后三个 + 坚持记录前两个 -->
-      <div class="medal-row">
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.total50000}}"></image>
-          <text class="medal-label">累计50000步</text>
+      <div class="sy-medal-row">
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.total50000}}"></image>
+          <text class="sy-medal-label">累计50000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.total100000}}"></image>
-          <text class="medal-label">累计100000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.total100000}}"></image>
+          <text class="sy-medal-label">累计100000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.total200000}}"></image>
-          <text class="medal-label">累计200000步</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.total200000}}"></image>
+          <text class="sy-medal-label">累计200000步</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record1day}}"></image>
-          <text class="medal-label">坚持记录1天</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record1day}}"></image>
+          <text class="sy-medal-label">坚持记录1天</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record1week}}"></image>
-          <text class="medal-label">坚持记录1周</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record1week}}"></image>
+          <text class="sy-medal-label">坚持记录1周</text>
         </div>
       </div>
 
       <!-- 第三行：坚持记录后五个 -->
-      <div class="medal-row">
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record1month}}"></image>
-          <text class="medal-label">坚持记录1月</text>
+      <div class="sy-medal-row">
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record1month}}"></image>
+          <text class="sy-medal-label">坚持记录1月</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record3month}}"></image>
-          <text class="medal-label">坚持记录3月</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record3month}}"></image>
+          <text class="sy-medal-label">坚持记录3月</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record6month}}"></image>
-          <text class="medal-label">坚持记录6月</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record6month}}"></image>
+          <text class="sy-medal-label">坚持记录6月</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record1year}}"></image>
-          <text class="medal-label">坚持记录1年</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record1year}}"></image>
+          <text class="sy-medal-label">坚持记录1年</text>
         </div>
-        <div class="medal-item">
-          <image class="medal-icon" src="{{medals.record2year}}"></image>
-          <text class="medal-label">坚持记录2年</text>
+        <div class="sy-medal-item">
+          <image class="sy-medal-icon" src="{{medals.record2year}}"></image>
+          <text class="sy-medal-label">坚持记录2年</text>
         </div>
       </div>
-    </div>
+        </div>
+      </list-item>
 
-    <!-- 底部留白 -->
-    <div class="bottom-spacer"></div>
+      <!-- 底部留白 -->
+      <list-item type="spacer" class="list-item-spacer">
+        <div class="sy-bottom-spacer"></div>
+      </list-item>
+    </list>
 
     <!-- 编辑数据弹窗 -->
     <div class="edit-modal" if="{{showEditModal}}">
@@ -646,59 +656,75 @@ export default {
 <style lang="scss">
 @import './../assets/styles/style.scss';
 
-.page-container {
+.shouye-container {
   flex: 1;
   flex-direction: column;
   width: 100%;
   background-image: url('/pages/Demo/assets/img/bg.png');
   background-size: 100% 100%;
   background-position: top center;
-  padding: 12 * $size-factor;
 }
 
-.bottom-spacer {
+.content-list {
+  flex: 1;
+  width: 100%;
+  padding: 12 * $size-factor;
+  columns: 1;
+}
+
+.list-item-card {
+  width: 100%;
+  margin-bottom: 12 * $size-factor;
+}
+
+.list-item-spacer {
+  width: 100%;
+}
+
+.sy-bottom-spacer {
   height: 70 * $size-factor;
   width: 100%;
 }
 
 /* 今日运动步数卡片 */
-.step-card {
+.sy-step-card {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 16 * $size-factor;
   padding: 16 * $size-factor;
-  margin-bottom: 12 * $size-factor;
   flex-direction: column;
   border: 2px solid #000000;
+  height: 250 * $size-factor;
+  width: 100%;
 }
 
-.step-card-header {
+.sy-step-card-header {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0;
 }
 
-.step-text-group {
+.sy-step-text-group {
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
 }
 
-.today-row {
+.sy-today-row {
   flex-direction: row;
   align-items: center;
   height: 40 * $size-factor;
 }
 
-.step-title-big {
+.sy-step-title-big {
   font-size: 20 * $size-factor;
   font-weight: 600;
   color: #000000;
   margin-right: 4 * $size-factor;
-  line-height: 40 * $size-factor; /* Increased line-height */
+  line-height: 40 * $size-factor;
 }
 
-.step-subtitle-big {
+.sy-step-subtitle-big {
   font-size: 14 * $size-factor;
   font-weight: 600;
   color: #000000;
@@ -720,43 +746,45 @@ export default {
   z-index: -1;
 }
 
-.date-wrap {
+.sy-date-wrap {
   flex-direction: column;
   align-items: flex-end;
 }
 
-.date-month {
+.sy-date-month {
   font-size: 12 * $size-factor;
   color: #000000;
   font-weight: bold;
 }
 
-.date-day {
-  font-size: 30 * $size-factor;
+.sy-date-day {
+  font-size: 27 * $size-factor;
   font-weight: bold;
   color: #000000;
-  line-height: 45 * $size-factor;
+  line-height: 20 * $size-factor;
+  height:20 * $size-factor;
+  margin-top: 5 * $size-factor;
+  margin-bottom: 3 * $size-factor;
 }
 
-.date-label {
+.sy-date-label {
   font-size: 12 * $size-factor;
   color: #666666;
   text-align: right;
-  line-height: 22 * $size-factor;
+  line-height: 14 * $size-factor;
+  margin-top: 4 * $size-factor;
 }
 
 /* 步数圆环 */
-.step-circle-wrap {
-  align-items: center;
+.sy-step-circle-wrap {
+
   justify-content: center;
-  height: 282 * $size-factor;
-  margin-top: 5 * $size-factor;
-  margin-bottom: 5 * $size-factor;
+
 }
 
-.step-circle {
-  width: 128 * $size-factor;
-  height: 128 * $size-factor;
+.sy-step-circle {
+  width: 126 * $size-factor;
+  height: 126 * $size-factor;
   border-radius: 70 * $size-factor;
   border-width: 8 * $size-factor;
   border-color: #9d6bf6;
@@ -765,20 +793,20 @@ export default {
   background-color: #ffffff;
 }
 
-.step-circle-inner {
+.sy-step-circle-inner {
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.step-label {
+.sy-step-label {
   font-size: 12 * $size-factor;
   color: #000000;
   margin-top: 6 * $size-factor;
   margin-bottom: 2 * $size-factor;
 }
 
-.step-count {
+.sy-step-count {
   font-size: 30 * $size-factor;
   font-weight: 900;
   color: #000000;
@@ -786,32 +814,31 @@ export default {
   lines: 1;
 }
 
-.step-unit {
+.sy-step-unit {
   font-size: 14 * $size-factor;
   color: #000000;
   margin-top: 2 * $size-factor;
 }
 
 /* 今日数据卡片 */
-.data-card {
+.sy-data-card {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 16 * $size-factor;
   padding: 16 * $size-factor;
   padding-bottom: 20 * $size-factor;
-  margin-bottom: 12 * $size-factor;
   flex-direction: column;
   border: 2px solid #000000;
-  flex-shrink: 0;
+  width: 100%;
 }
 
-.data-card-header {
+.sy-data-card-header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16 * $size-factor;
 }
 
-.data-title {
+.sy-data-title {
   font-size: 20 * $size-factor;
   font-weight: 900;
   color: #000000;
@@ -819,7 +846,7 @@ export default {
   height: 36 * $size-factor;
 }
 
-.edit-btn {
+.sy-edit-btn {
   flex-direction: row;
   align-items: center;
   background-color: #000000;
@@ -830,49 +857,49 @@ export default {
   padding-bottom: 6 * $size-factor;
 }
 
-.edit-text {
+.sy-edit-text {
   font-size: 14 * $size-factor;
   color: #ffffff;
   font-weight: bold;
 }
 
-.eye-icon-big {
+.sy-eye-icon-big {
   width: 20 * $size-factor;
   height: 20 * $size-factor;
   object-fit: contain;
   align-self: center;
   margin-left: 4 * $size-factor;
-  tint-color: #ffffff; /* Attempt to make icon white if supported, or assume icon is appropriate */
+  tint-color: #ffffff;
 }
 
-.eye-icon-small {
+.sy-eye-icon-small {
   width: 14 * $size-factor;
   height: 14 * $size-factor;
   object-fit: contain;
   align-self: center;
   margin-left: 4 * $size-factor;
-  tint-color: #ffffff; /* Attempt to make icon white if supported, or assume icon is appropriate */
+  tint-color: #ffffff;
 }
 
-.data-stats {
+.sy-data-stats {
   flex-direction: row;
   justify-content: space-around;
   padding-bottom: 10 * $size-factor;
 }
 
-.stat-item {
+.sy-stat-item {
   flex-direction: column;
   align-items: center;
 }
 
-.stat-value {
+.sy-stat-value {
   font-size: 28 * $size-factor;
   font-weight: 900;
   color: #000000;
   line-height: 36 * $size-factor;
 }
 
-.stat-label {
+.sy-stat-label {
   font-size: 12 * $size-factor;
   color: #666666;
   margin-top: 8 * $size-factor;
@@ -880,7 +907,7 @@ export default {
 }
 
 /* 勋章墙卡片 */
-.medal-card {
+.sy-medal-card {
   background-image: url('/pages/Demo/assets/img/xuanzhangqiang-bg.png');
   background-size: cover;
   border-radius: 16 * $size-factor;
@@ -889,44 +916,41 @@ export default {
   padding-right: 8 * $size-factor;
   padding-bottom: 24 * $size-factor;
   flex-direction: column;
-  margin-bottom: 20 * $size-factor;
   border: 2px solid #000000;
+  width: 100%;
 }
 
-.medal-title {
-  font-size: 18 * $size-factor;
-  font-weight: 900;
+.sy-medal-title {
+  font-size: 15 * $size-factor;
+  font-weight: 700;
   color: #ffffff;
-  margin-bottom: 16 * $size-factor;
-  line-height: 28 * $size-factor;
-  height: 28 * $size-factor;
+  margin-bottom: 12 * $size-factor;
+  
 }
 
-.medal-row {
+.sy-medal-row {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10 * $size-factor;
 }
 
-.medal-item {
+.sy-medal-item {
   flex-direction: column;
   align-items: center;
-  width: 64 * $size-factor;
+  width: 72 * $size-factor;
 }
 
-.medal-icon {
-  width: 56 * $size-factor;
-  height: 56 * $size-factor;
+.sy-medal-icon {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
   object-fit: contain;
 }
 
-.medal-label {
+.sy-medal-label {
   font-size: 8 * $size-factor;
   color: #ffffff;
   margin-top: 2 * $size-factor;
   text-align: center;
-  lines: 1;
-  line-height: 18 * $size-factor;
 }
 
 /* 编辑模态框 */

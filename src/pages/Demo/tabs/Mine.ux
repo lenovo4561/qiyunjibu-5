@@ -1,8 +1,8 @@
 <template>
-  <div class="page-container">
+  <div class="mine-container">
     <!-- 顶部用户信息 -->
     <div class="user-header">
-      <image class="user-avatar" src="/pages/Demo/assets/img/logo.png"></image>
+      <image class="user-avatar" src="/pages/Demo/assets/img/yh.png"></image>
       <text class="user-name">李琳颖</text>
     </div>
 
@@ -44,7 +44,7 @@
     </div>
 
     <!-- 底部留白 -->
-    <div class="bottom-spacer"></div>
+    <div class="mine-bottom-spacer"></div>
   </div>
 </template>
 
@@ -80,7 +80,7 @@ export default {
 <style lang="scss">
 @import './../assets/styles/style.scss';
 
-.page-container {
+.mine-container {
   flex: 1;
   flex-direction: column;
   width: 100%;
@@ -89,7 +89,7 @@ export default {
   padding: 20 * $size-factor;
 }
 
-.bottom-spacer {
+.mine-bottom-spacer {
   height: 70 * $size-factor;
   width: 100%;
 }

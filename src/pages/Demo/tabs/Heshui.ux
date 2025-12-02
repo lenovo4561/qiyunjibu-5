@@ -1,84 +1,98 @@
 <template>
-  <div class="page-container">
-    <!-- 饮水量卡片 -->
-    <div class="water-card">
-      <div class="card-header">
-        <div class="title-group">
-          <!-- 背景图片已包含"今日饮水量"文案 -->
+  <div class="heshui-container">
+    <list class="content-list">
+      <!-- 饮水量卡片 -->
+      <list-item type="water-card" class="list-item-water">
+        <div class="water-card">
+          <div class="card-header">
+            <div class="title-group">
+              <!-- 背景图片已包含"今日饮水量"文案 -->
+            </div>
+            <div class="date-group">
+              <text class="date-month">{{ currentMonth }}月</text>
+              <text class="date-day">{{ currentDay }}</text>
+              <text class="date-label">今日</text>
+            </div>
+          </div>
+
+          <div class="water-info">
+            <div class="amount-group">
+              <text class="amount-num">{{ formattedAmount }}</text>
+              <text class="amount-unit">ml</text>
+            </div>
+            <div class="icon-bg"></div>
+          </div>
         </div>
-        <div class="date-group">
-          <text class="date-month">{{ currentMonth }}月</text>
-          <text class="date-day">{{ currentDay }}</text>
-          <text class="date-label">今日</text>
+      </list-item>
+
+      <!-- 立即喝水按钮 -->
+      <list-item type="action-btn" class="list-item-btn">
+        <div class="action-btn" onclick="openModal">
+          <text class="btn-text">立即喝水</text>
+          <image class="btn-icon" src="/pages/Demo/assets/img/yanjing2.png"></image>
         </div>
-      </div>
+      </list-item>
 
-      <div class="water-info">
-        <div class="amount-group">
-          <text class="amount-num">{{ formattedAmount }}</text>
-          <text class="amount-unit">ml</text>
+      <!-- 信息卡片 1 -->
+      <list-item type="info-card" class="list-item-info">
+        <div class="info-card">
+          <div class="info-header">
+            <text class="info-title">成人基础饮水量</text>
+            <image
+              class="eye-icon-small"
+              src="/pages/Demo/assets/img/yanjing.png"
+            ></image>
+          </div>
+          <text class="info-content"
+            >健康成年人每日推荐饮用1500-1700毫升(约7-8杯，每杯200-250毫升)，此为温和气候、轻体力活动下的基准值。</text
+          >
         </div>
-        <div class="icon-bg"></div>
-      </div>
-    </div>
+      </list-item>
 
-    <!-- 立即喝水按钮 -->
-    <div class="action-btn" onclick="openModal">
-      <text class="btn-text">立即喝水</text>
-      <image class="btn-icon" src="/pages/Demo/assets/img/yanjing2.png"></image>
-    </div>
+      <!-- 信息卡片 2 -->
+      <list-item type="info-card2" class="list-item-info2">
+        <div class="info-card">
+          <div class="info-header">
+            <text class="info-title">特殊人群调整</text>
+            <image
+              class="eye-icon-small"
+              src="/pages/Demo/assets/img/yanjing.png"
+            ></image>
+          </div>
+          <text class="info-content"
+            >1、男性/重体力劳动者/高温环境工作者:每日需1700-2000毫升，出汗多时可适当增加。</text
+          >
+          <text class="info-content"
+            >2、女性/老年人/久坐人群:基础量1500毫升即可，避免过量增加肾脏负担。</text
+          >
+          <text class="info-content"
+            >3、孕妇:每日1700毫升左右，哺乳期增至2100毫升(需兼顾乳汁分泌)。4、儿童:按年龄估算，2-5岁约800-1000毫升:</text
+          >
+          <text class="info-content">6-12岁约1000-1400毫升(少量多次饮用)</text>
+        </div>
+      </list-item>
 
-    <!-- 信息卡片 1 -->
-    <div class="info-card">
-      <div class="info-header">
-        <text class="info-title">成人基础饮水量</text>
-        <image
-          class="eye-icon-small"
-          src="/pages/Demo/assets/img/yanjing.png"
-        ></image>
-      </div>
-      <text class="info-content"
-        >健康成年人每日推荐饮用1500-1700毫升(约7-8杯，每杯200-250毫升)，此为温和气候、轻体力活动下的基准值。</text
-      >
-    </div>
+      <!-- 信息卡片 3 -->
+      <list-item type="info-card3" class="list-item-info3">
+        <div class="info-card">
+          <div class="info-header">
+            <text class="info-title">喝水节奏建议</text>
+            <image
+              class="eye-icon-small"
+              src="/pages/Demo/assets/img/yanjing.png"
+            ></image>
+          </div>
+          <text class="info-content"
+            >建议少量多次饮水，避免短时间内大量饮水加重肾脏负担。早起空腹一杯水，有助于促进新陈代谢；睡前少量饮水，避免夜间口渴。</text
+          >
+        </div>
+      </list-item>
 
-    <!-- 信息卡片 2 -->
-    <div class="info-card">
-      <div class="info-header">
-        <text class="info-title">特殊人群调整</text>
-        <image
-          class="eye-icon-small"
-          src="/pages/Demo/assets/img/yanjing.png"
-        ></image>
-      </div>
-      <text class="info-content"
-        >1、男性/重体力劳动者/高温环境工作者:每日需1700-2000毫升，出汗多时可适当增加。</text
-      >
-      <text class="info-content"
-        >2、女性/老年人/久坐人群:基础量1500毫升即可，避免过量增加肾脏负担。</text
-      >
-      <text class="info-content"
-        >3、孕妇:每日1700毫升左右，哺乳期增至2100毫升(需兼顾乳汁分泌)。4、儿童:按年龄估算，2-5岁约800-1000毫升:</text
-      >
-      <text class="info-content">6-12岁约1000-1400毫升(少量多次饮用)</text>
-    </div>
-
-    <!-- 信息卡片 3 -->
-    <div class="info-card">
-      <div class="info-header">
-        <text class="info-title">喝水节奏建议</text>
-        <image
-          class="eye-icon-small"
-          src="/pages/Demo/assets/img/yanjing.png"
-        ></image>
-      </div>
-      <text class="info-content"
-        >建议少量多次饮水，避免短时间内大量饮水加重肾脏负担。早起空腹一杯水，有助于促进新陈代谢；睡前少量饮水，避免夜间口渴。</text
-      >
-    </div>
-
-    <!-- 底部留白 -->
-    <div class="bottom-spacer"></div>
+      <!-- 底部留白 -->
+      <list-item type="spacer" class="list-item-spacer">
+        <div class="hs-bottom-spacer"></div>
+      </list-item>
+    </list>
 
     <!-- 模态框 -->
     <div class="modal-mask" if="{{showModal}}">
@@ -206,17 +220,52 @@ export default {
 <style lang="scss">
 @import './../assets/styles/style.scss';
 
-.page-container {
+.heshui-container {
   flex: 1;
   flex-direction: column;
   width: 100%;
   background-image: url('/pages/Demo/assets/img/bg.png');
   background-size: 100% 100%;
   background-position: top center;
-  padding: 12 * $size-factor;
 }
 
-.bottom-spacer {
+.content-list {
+  flex: 1;
+  width: 100%;
+  padding: 12 * $size-factor;
+  columns: 1;
+}
+
+.list-item-water {
+  width: 100%;
+  margin-bottom: 16 * $size-factor;
+}
+
+.list-item-btn {
+  width: 100%;
+  margin-bottom: 16 * $size-factor;
+}
+
+.list-item-info {
+  width: 100%;
+  margin-bottom: 12 * $size-factor;
+}
+
+.list-item-info2 {
+  width: 100%;
+  margin-bottom: 12 * $size-factor;
+}
+
+.list-item-info3 {
+  width: 100%;
+  margin-bottom: 12 * $size-factor;
+}
+
+.list-item-spacer {
+  width: 100%;
+}
+
+.hs-bottom-spacer {
   height: 70 * $size-factor;
   width: 100%;
 }
@@ -229,8 +278,7 @@ export default {
   padding: 20 * $size-factor;
   flex-direction: column;
   height: 280 * $size-factor;
-  margin-bottom: 16 * $size-factor;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .card-header {
@@ -344,8 +392,6 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16 * $size-factor;
-  flex-shrink: 0;
 }
 
 .btn-text {
@@ -369,9 +415,7 @@ export default {
   border: 2px solid #000000;
   padding: 16 * $size-factor;
   flex-direction: column;
-  margin-bottom: 12 * $size-factor;
-  flex-shrink: 0;
-  min-height: 150 * $size-factor;
+  width: 100%;
 }
 
 .info-header {
